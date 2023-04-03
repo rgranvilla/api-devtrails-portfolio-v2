@@ -1,9 +1,12 @@
 {
-  "name": "github-api-proxy-v1",
-  "version": "0.0.1",
+  "name": "api-devtrails-portfolio-v2",
+  "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node build/server.js",
+    "build": "tsup src --out-dir build",
     "lint": "npx eslint --ext .tsx,.ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepare": "husky install",
@@ -11,10 +14,18 @@
     "co": "changeset add && changeset version && git add . && lint-staged && cz",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "publish-packages": "yarn build lint test && changeset version && changeset publish"
+    "publish-packages": "yarn build lint test && changeset version && changeset publish",
+    "test:cov": "vitest run --coverage",
+    "test:e2e": "vitest run --dir src/controllers/",
+    "test:e2e:watch": "vitest --dir src/controllers/",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
+    "@fastify/cors": "^8.2.1",
+    "@fastify/swagger": "^8.3.1",
+    "@fastify/swagger-ui": "^1.6.0",
     "dotenv": "^16.0.3",
+    "fastify": "^4.15.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -22,8 +33,11 @@
     "@commitlint/cli": "^17.5.1",
     "@commitlint/config-conventional": "^17.4.4",
     "@types/node": "^18.15.11",
+    "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
+    "@vitest/coverage-c8": "^0.29.8",
+    "@vitest/ui": "^0.29.8",
     "commitizen": "^4.3.0",
     "commitlint": "^17.5.1",
     "cz-conventional-changelog": "^3.3.0",
@@ -36,13 +50,22 @@
     "husky": "^8.0.0",
     "lint-staged": "^13.2.0",
     "prettier": "^2.8.7",
+    "supertest": "^6.3.3",
     "tsup": "^6.7.0",
     "tsx": "^3.12.6",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.3",
+    "vite": "^4.2.1",
+    "vite-plugin-node": "^3.0.2",
+    "vite-tsconfig-paths": "^4.0.7",
+    "vitest": "^0.29.8"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "yarn": ">=1.22.5"
   }
 }

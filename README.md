@@ -1,12 +1,12 @@
-# Github Api Proxy
+# Api Devtrails Portfolio v2
 
-_Development of an API proxy for the selection process of Shaw and Partners._
+_Development of an API for the Devtrails Portfolio V2._
 
-A Node.js server that acts as a proxy to the Github API. This project uses fastify as the server framework, zod for input validation, dotenv for managing environment variables, and is written in TypeScript.
+A Node.js server that acts as api for Devtrails Portfolio. This project uses fastify as the server framework, zod for input validation, dotenv for managing environment variables, and is written in TypeScript.
 
 ## Installation
 
-1. Clone the repository: `git clone git@github.com:rgranvilla/github-api-proxy.git-v1`
+1. Clone the repository: `git clone git@github.com:rgranvilla/api-devtrails-portfolio-v2.git`
 2. Install dependencies: `yarn install`
 
 ## Getting Started
@@ -30,7 +30,7 @@ A Node.js server that acts as a proxy to the Github API. This project uses fasti
 ## Environment Variables
 
 - `NODE_ENV`: The environment the server is running in (`development`, `production`, `test`, etc.)
-- `API_BASE_URL`: The base URL of the Github API
+- `API_BASE_URL`: The base URL of the Api Devtrails Portfolio V2
 - `PORT`: The port the server will listen on
 
 **Note**: Make sure to never commit your .env file to source control. The .env.example file is provided as a template to show what environment variables are required.
