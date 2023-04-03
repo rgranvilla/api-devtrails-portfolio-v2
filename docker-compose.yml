@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  postgres:
+    image: bitnami/postgresql
+    environment:
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - '${POSTGRES_PORTS}:${POSTGRES_PORTS}'

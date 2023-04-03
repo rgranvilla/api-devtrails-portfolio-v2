@@ -5,6 +5,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['dev', 'test', 'production']).default('dev'),
   API_BASE_URL: z.string().default('http://localhost'),
   PORT: z.coerce.number().default(3333),
+  POSTGRES_DATABASE: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);

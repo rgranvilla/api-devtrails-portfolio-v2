@@ -4,7 +4,8 @@
       "module": "commonjs",
       "baseUrl": "./",
       "paths": {
-        "@config/*": ["./src/config/*"],
+        "@config/*": ["./src/core/config/*"],
+        "@helpers/*": ["./src/core/helpers/*"],
         "@routes/*": ["./src/routes/*"],
       },
       "esModuleInterop": true,

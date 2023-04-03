@@ -8,5 +8,5 @@ app
     port: env.PORT,
   })
   .then(() => {
-    console.log(`🚀 HTTP Server Running on ${env.API_BASE_URL}`);
+    console.log(`🚀 HTTP Server Running on ${env.API_BASE_URL}:${env.PORT}`);
   });

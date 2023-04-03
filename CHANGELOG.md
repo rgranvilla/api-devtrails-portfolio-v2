@@ -1,5 +1,11 @@
 # api-devtrails-portfolio-v2
 
+## 0.0.3
+
+### Patch Changes
+
+- Create users table and user entity with tests
+
 ## 0.0.2
 
 ### Patch Changes
