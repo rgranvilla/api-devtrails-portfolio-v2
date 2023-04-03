@@ -13,7 +13,7 @@ interface IUserProps {
   resume_cv_url?: string | null;
   linkedin_url?: string | null;
   github_url?: string | null;
-  instagran_url?: string | null;
+  instagram_url?: string | null;
   twitter_url?: string | null;
   whatsapp_number?: string | null;
   created_at: Date;
@@ -45,7 +45,7 @@ export class User {
       resume_cv_url: props.resume_cv_url ?? null,
       linkedin_url: props.linkedin_url ?? null,
       github_url: props.github_url ?? null,
-      instagran_url: props.instagran_url ?? null,
+      instagram_url: props.instagram_url ?? null,
       twitter_url: props.twitter_url ?? null,
       whatsapp_number: props.whatsapp_number ?? null,
       created_at: props.created_at ?? new Date(),
@@ -145,12 +145,12 @@ export class User {
     return this.props.github_url;
   }
 
-  public set instagran_url(instagran_url: string | null | undefined) {
-    this.props.instagran_url = instagran_url;
+  public set instagram_url(instagram_url: string | null | undefined) {
+    this.props.instagram_url = instagram_url;
   }
 
-  public get instagran_url(): string | null | undefined {
-    return this.props.instagran_url;
+  public get instagram_url(): string | null | undefined {
+    return this.props.instagram_url;
   }
 
   public set twitter_url(twitter_url: string | null | undefined) {

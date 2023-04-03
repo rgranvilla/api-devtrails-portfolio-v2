@@ -19,7 +19,7 @@ describe('User Entity', () => {
       resume_cv_url,
       linkedin_url,
       github_url,
-      instagran_url,
+      instagram_url,
       twitter_url,
       whatsapp_number,
       created_at,
@@ -42,7 +42,7 @@ describe('User Entity', () => {
     expect(resume_cv_url).toBeNull();
     expect(linkedin_url).toBeNull();
     expect(github_url).toBeNull();
-    expect(instagran_url).toBeNull();
+    expect(instagram_url).toBeNull();
     expect(twitter_url).toBeNull();
     expect(whatsapp_number).toBeNull();
     expect(created_at).toBeTruthy();
@@ -67,7 +67,7 @@ describe('User Entity', () => {
     user.resume_cv_url = 'http://...';
     user.linkedin_url = 'http://...';
     user.github_url = 'http://...';
-    user.instagran_url = 'http://...';
+    user.instagram_url = 'http://...';
     user.twitter_url = 'http://...';
     user.whatsapp_number = 'http://...';
 
@@ -83,7 +83,7 @@ describe('User Entity', () => {
     expect(user.resume_cv_url).toBe('http://...');
     expect(user.linkedin_url).toBe('http://...');
     expect(user.github_url).toBe('http://...');
-    expect(user.instagran_url).toBe('http://...');
+    expect(user.instagram_url).toBe('http://...');
     expect(user.twitter_url).toBe('http://...');
     expect(user.whatsapp_number).toBe('http://...');
     expect(user.created_at).toBeTruthy();
