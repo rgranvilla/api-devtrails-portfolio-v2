@@ -13,6 +13,9 @@ interface IRequest {
   password: string;
 }
 
+interface IResponse {
+  user: User;
+}
 export class ResetPasswordUseCase {
   constructor(
     private userRepository: UsersRepository,
@@ -20,7 +23,7 @@ export class ResetPasswordUseCase {
     private dateProvider: IDateProvider,
   ) {}
 
-  async execute({ token, password }: IRequest): Promise<void> {
+  async execute({ token, password }: IRequest): Promise<IResponse> {
     const userToken = await this.userTokensRepository.findByRefreshToken(token);
 
     if (!userToken) {
@@ -45,5 +48,9 @@ export class ResetPasswordUseCase {
     await this.userRepository.save(user);
 
     await this.userTokensRepository.deleteById(userToken.id);
+
+    return {
+      user,
+    };
   }
 }

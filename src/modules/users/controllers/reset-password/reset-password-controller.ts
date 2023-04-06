@@ -10,7 +10,7 @@ export async function resetPasswordController(
   reply: FastifyReply,
 ) {
   const ResetPasswordQuerySchema = z.object({
-    token: z.string(),
+    token: z.string().uuid(),
   });
 
   const ResetPasswordBodySchema = z.object({
@@ -23,12 +23,12 @@ export async function resetPasswordController(
   try {
     const resetPasswordUseCase = makeResetPasswordUseCase();
 
-    await resetPasswordUseCase.execute({
+    const { user } = await resetPasswordUseCase.execute({
       token,
       password,
     });
 
-    return reply.status(200).send();
+    return reply.status(200).send({ user });
   } catch (err) {
     if (err instanceof TokenInvalidError || err instanceof TokenExpiredError) {
       return reply.status(409).send({ message: err.message });
