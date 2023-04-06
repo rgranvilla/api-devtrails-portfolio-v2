@@ -54,11 +54,13 @@ model UsersToken {
 }
 
 model UsersSkill {
-  id             String  @id @default(uuid())
+  id             String   @id @default(uuid())
   name           String
   description    String?
-  proficiency    Int     @default(0)
+  proficiency    Int      @default(0)
   skill_icon_url String?
+  created_at     DateTime @default(now())
+  updated_at     DateTime @updatedAt
 
   User    User   @relation(fields: [user_id], references: [id])
   user_id String
