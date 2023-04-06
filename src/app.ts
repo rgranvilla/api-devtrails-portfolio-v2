@@ -1,4 +1,6 @@
+import fastifyCookie from '@fastify/cookie';
 import fastifyCors from '@fastify/cors';
+import fastifyJwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastify from 'fastify';
@@ -35,6 +37,22 @@ app.register(fastifySwaggerUi, {
     deepLinking: false,
   },
 });
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: 'refreshToken',
+    signed: false,
+  },
+  sign: {
+    expiresIn: '10m',
+  },
+  decode: {
+    complete: true,
+  },
+});
+
+app.register(fastifyCookie);
 
 app.register(appRoutes);
 

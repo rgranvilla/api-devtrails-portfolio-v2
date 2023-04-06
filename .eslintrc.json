@@ -46,8 +46,12 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          "/^@config/",
-          "/^@routes/",
+          ["/^@app/", "/^@database/", "/^@config/"],
+          ["/^@utils/", "/^@helpers/", "/^@errors/"],
+          ["/^@providers/"],
+          ["/^@controller/"],
+          ["/^@modules/"],
+          ["/^@routes/"],
           ["parent", "sibling", "index"]],
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
