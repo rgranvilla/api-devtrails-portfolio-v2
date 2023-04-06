@@ -42,10 +42,6 @@ export class UserSkill {
     return this._id;
   }
 
-  public set user_id(user_id: string) {
-    this.props.user_id = user_id;
-  }
-
   public get user_id(): string {
     return this.props.user_id;
   }
