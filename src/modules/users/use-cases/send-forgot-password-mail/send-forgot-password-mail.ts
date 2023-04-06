@@ -25,6 +25,10 @@ export class SendForgotPasswordMailUseCase {
   async execute(email: string): Promise<IResponse> {
     const user = await this.usersRepository.findByEmail(email);
 
+    if (!user) {
+      throw new ResourceNotFoundError();
+    }
+
     const templatePath = resolve(
       __dirname,
       '..',

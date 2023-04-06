@@ -12,10 +12,10 @@ describe('Send Forgot Password Mail (e2e)', () => {
     await app.close();
   });
 
-  it('should be able to reset a password', async () => {
+  it('should be able to send forgot password mail', async () => {
     const createdUser = await request(app.server).post('/users/create').send({
-      name: 'Reset Password',
-      email: 'reset-password@mail.com',
+      name: 'Send Forgot Password Mail',
+      email: 'send-mail@mail.com',
       password: '12345678',
     });
 
@@ -31,5 +31,14 @@ describe('Send Forgot Password Mail (e2e)', () => {
         token: expect.any(String),
       }),
     );
+  });
+
+  it('should not be able to send forgot password mail to unexistent user', async () => {
+    const response = await request(app.server)
+      .post('/users/forgot-password')
+      .send({ email: 'inexistent@mail.com' });
+
+    expect(response.status).toBe(409);
+    expect(response.body.message).toBe('Resource not found.');
   });
 });
