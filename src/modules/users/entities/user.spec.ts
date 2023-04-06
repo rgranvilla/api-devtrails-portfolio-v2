@@ -11,6 +11,7 @@ describe('User Entity', () => {
       name,
       email,
       password,
+      role,
       phone_number,
       address,
       job_title,
@@ -34,6 +35,7 @@ describe('User Entity', () => {
     expect(name).toBe('John Doe');
     expect(email).toBe('johndoe@mail.com');
     expect(password).toBeTruthy();
+    expect(role).toBe('subscriber');
     expect(phone_number).toBeNull();
     expect(address).toBeNull();
     expect(job_title).toBeNull();
@@ -59,6 +61,7 @@ describe('User Entity', () => {
     user.name = 'Mary';
     user.email = 'mary@mail.com';
     user.password = await createHashPassword('123456');
+    user.role = 'creator';
     user.phone_number = '+5551999991111';
     user.address = 'rua A, 120, ...';
     user.job_title = 'Fullstack Developer';
@@ -75,6 +78,7 @@ describe('User Entity', () => {
 
     expect(user.name).toBe('Mary');
     expect(user.email).toBe('mary@mail.com');
+    expect(user.role).toBe('creator');
     expect(user.phone_number).toBe('+5551999991111');
     expect(user.address).toBe('rua A, 120, ...');
     expect(user.job_title).toBe('Fullstack Developer');

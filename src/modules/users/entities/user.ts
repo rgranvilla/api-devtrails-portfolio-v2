@@ -1,10 +1,12 @@
-import { Replace } from '@helpers/replace';
 import { randomUUID } from 'node:crypto';
+
+import { Replace } from '@helpers/replace';
 
 interface IUserProps {
   name: string;
   email: string;
   password: string;
+  role: 'admin' | 'creator' | 'subscriber';
   phone_number?: string | null;
   address?: string | null;
   job_title?: string | null;
@@ -28,6 +30,7 @@ export class User {
     props: Replace<
       IUserProps,
       {
+        role?: 'admin' | 'creator' | 'subscriber';
         created_at?: Date;
         updated_at?: Date;
       }
@@ -37,6 +40,7 @@ export class User {
     this._id = id ?? randomUUID();
     this.props = {
       ...props,
+      role: props.role ?? 'subscriber',
       phone_number: props.phone_number ?? null,
       address: props.address ?? null,
       job_title: props.job_title ?? null,
@@ -79,6 +83,14 @@ export class User {
 
   public get password(): string {
     return this.props.password;
+  }
+
+  public set role(role: 'admin' | 'creator' | 'subscriber') {
+    this.props.role = role;
+  }
+
+  public get role(): 'admin' | 'creator' | 'subscriber' {
+    return this.props.role;
   }
 
   public set phone_number(phone_number: string | null | undefined) {
