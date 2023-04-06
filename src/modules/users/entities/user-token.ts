@@ -33,10 +33,6 @@ export class UserToken {
     return this._id;
   }
 
-  public set user_id(userId: string) {
-    this.props.user_id = userId;
-  }
-
   public get user_id(): string {
     return this.props.user_id;
   }
