@@ -31,10 +31,6 @@ export async function updatePasswordUserController(
       },
     });
 
-    if (!user) {
-      throw new ResourceNotFoundError();
-    }
-
     return reply.status(200).send({
       user: UserMapper.toHttp(user),
       newPassword,
