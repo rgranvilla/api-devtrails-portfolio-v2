@@ -10,20 +10,18 @@ import { UserTokensRepository } from '../user-tokens-repository';
 export class InMemoryUserTokensRepository implements UserTokensRepository {
   public items: IUserTokenProps[] = [];
 
-  async findByUserIdAndRefreshToken(
-    user_id: string,
-    refresh_token: string,
-  ): Promise<UserToken | null> {
-    const userToken = this.items.find(
-      (item) =>
-        item.user_id === user_id && item.refresh_token === refresh_token,
-    );
+  async findByUserId(user_id: string): Promise<UserToken[] | null> {
+    const userTokens = this.items.filter((item) => item.user_id === user_id);
 
-    if (!userToken) {
+    if (!userTokens) {
       return null;
     }
 
-    return UserTokenMapper.toDomain(userToken);
+    const allUserTokens = userTokens.map((item) =>
+      UserTokenMapper.toDomain(item),
+    );
+
+    return allUserTokens;
   }
 
   async findByRefreshToken(refresh_token: string): Promise<UserToken | null> {

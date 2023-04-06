@@ -46,6 +46,14 @@ export class SendForgotPasswordMailUseCase {
 
     const expires_date = this.dateProvider.addMinutes(15);
 
+    const oldTokens = await this.userTokensRepository.findByUserId(user.id);
+
+    if (oldTokens) {
+      for (const token of oldTokens) {
+        this.userTokensRepository.deleteById(token.id);
+      }
+    }
+
     await this.userTokensRepository.create({
       refresh_token: token,
       user_id: user.id,

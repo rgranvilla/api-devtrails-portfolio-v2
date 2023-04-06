@@ -17,11 +17,11 @@ enum Role {
 }
 
 model User {
-  id                String      @id @default(uuid())
+  id                String       @id @default(uuid())
   name              String
-  email             String      @unique
+  email             String       @unique
   password          String
-  role              Role        @default(subscriber)
+  role              Role         @default(subscriber)
   phone_number      String?
   address           String?
   job_title         String?
@@ -33,14 +33,15 @@ model User {
   instagram_url     String?
   twitter_url       String?
   whatsapp_number   String?
-  created_at        DateTime    @default(now())
-  updated_at        DateTime    @updatedAt
-  UserToken         UserToken[]
+  created_at        DateTime     @default(now())
+  updated_at        DateTime     @updatedAt
+  UsersToken        UsersToken[]
+  UsersSkill        UsersSkill[]
 
   @@map("users")
 }
 
-model UserToken {
+model UsersToken {
   id            String   @id @default(uuid())
   refresh_token String   @unique
   expires_date  DateTime
@@ -49,5 +50,18 @@ model UserToken {
   User    User   @relation(fields: [user_id], references: [id])
   user_id String
 
-  @@map("user-tokens")
+  @@map("users-tokens")
+}
+
+model UsersSkill {
+  id             String  @id @default(uuid())
+  name           String
+  description    String?
+  proficiency    Int     @default(0)
+  skill_icon_url String?
+
+  User    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("users_skills")
 }

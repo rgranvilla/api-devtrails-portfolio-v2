@@ -6,40 +6,40 @@ import { UserTokenMapper } from '@modules/users/mapper/user-token-mapper';
 import { UserTokensRepository } from '@modules/users/repositories/user-tokens-repository';
 
 export class PrismaUserTokensRepository implements UserTokensRepository {
-  async findByUserIdAndRefreshToken(
-    user_id: string,
-    refresh_token: string,
-  ): Promise<UserToken | null> {
-    const userToken = await prisma.userToken.findFirst({
+  async findByUserId(user_id: string): Promise<UserToken[] | null> {
+    const userTokens = await prisma.usersToken.findMany({
       where: {
         user_id,
-        refresh_token,
       },
     });
 
-    if (!userToken) {
+    if (!userTokens) {
       return null;
     }
 
-    return UserTokenMapper.toDomain(userToken);
+    const allUserTokens = userTokens.map((item) =>
+      UserTokenMapper.toDomain(item),
+    );
+
+    return allUserTokens;
   }
 
   async findByRefreshToken(refresh_token: string): Promise<UserToken | null> {
-    const userToken = await prisma.userToken.findUnique({
+    const usersToken = await prisma.usersToken.findUnique({
       where: {
         refresh_token,
       },
     });
 
-    if (!userToken) {
+    if (!usersToken) {
       return null;
     }
 
-    return UserTokenMapper.toDomain(userToken);
+    return UserTokenMapper.toDomain(usersToken);
   }
 
   async deleteById(id: string): Promise<void> {
-    await prisma.userToken.delete({
+    await prisma.usersToken.delete({
       where: {
         id,
       },
@@ -59,7 +59,7 @@ export class PrismaUserTokensRepository implements UserTokensRepository {
 
     const raw = UserTokenMapper.toDatabase(newUserToken);
 
-    await prisma.userToken.create({
+    await prisma.usersToken.create({
       data: raw,
     });
 
