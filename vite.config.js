@@ -9,6 +9,6 @@ export default defineConfig({
     },
   },
   test: {
-    environmentMatchGlobs: [['src/modules/**/controllers/**', 'prisma']],
+    environmentMatchGlobs: [['src/application/controllers/**', 'prisma']],
   },
 });

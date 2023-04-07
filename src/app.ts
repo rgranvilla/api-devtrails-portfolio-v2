@@ -6,9 +6,9 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import fastify from 'fastify';
 import { ZodError } from 'zod';
 
-import { env } from '@config/env';
+import { env } from '@core/config/env';
 
-import { appRoutes } from '@routes/app-routes';
+import { appRoutes } from '@routes/index';
 
 import packageJson from '../package.json';
 
