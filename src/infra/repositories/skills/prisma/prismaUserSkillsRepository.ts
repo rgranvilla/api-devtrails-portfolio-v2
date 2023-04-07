@@ -8,6 +8,10 @@ import { UserSkill } from '@domain/skills/entities/userSkill';
 import { IUserSkillsRepository } from '../IUserSkillsRepository';
 
 export class PrismaUserSkillsRepository implements IUserSkillsRepository {
+  async findBySkillId(skill_id: string): Promise<UserSkill | null> {
+    throw new Error('Method not implemented.');
+  }
+
   async findByUserId(user_id: string): Promise<UserSkill[] | null> {
     throw new Error('Method not implemented.');
   }
