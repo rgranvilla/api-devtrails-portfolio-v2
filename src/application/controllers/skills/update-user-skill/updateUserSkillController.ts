@@ -1,7 +1,8 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithThisIdNotFoundError';
+import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
 
 import { UserSkillMapper } from '@mappers/skills/userSkillMapper';
 
@@ -17,9 +18,9 @@ export async function updateUserSkillController(
   });
 
   const updateUserSkillBodySchema = z.object({
-    name: z.string(),
+    name: z.string().optional(),
     description: z.string().optional(),
-    proficiency: z.coerce.number().default(0),
+    proficiency: z.coerce.number().optional(),
     skill_icon_url: z.string().optional(),
   });
 
@@ -27,8 +28,7 @@ export async function updateUserSkillController(
     request.params,
   );
 
-  const { name, proficiency, description, skill_icon_url } =
-    updateUserSkillBodySchema.parse(request.body);
+  const userSkillToUpdate = updateUserSkillBodySchema.parse(request.body);
 
   try {
     const updateUserSkillUseCase = buildUpdateUserSkillUseCaseFactory();
@@ -36,10 +36,7 @@ export async function updateUserSkillController(
     const { userSkill } = await updateUserSkillUseCase.execute({
       skill_id,
       user_id,
-      name,
-      proficiency,
-      description,
-      skill_icon_url,
+      data: userSkillToUpdate,
     });
 
     const response = UserSkillMapper.toHttp(userSkill);
@@ -48,8 +45,12 @@ export async function updateUserSkillController(
       ...response,
     });
   } catch (error) {
-    if (error instanceof ResourceNotFoundError) {
-      return reply.status(409).send({ message: error.message });
+    if (error instanceof UserSkillWithThisIdNotFoundError) {
+      return reply.status(404).send({ message: error.message });
+    }
+
+    if (error instanceof UserWithThisIdNotFoundError) {
+      return reply.status(404).send({ message: error.message });
     }
 
     throw error;

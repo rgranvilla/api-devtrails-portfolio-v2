@@ -1,6 +1,6 @@
 import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
 
-import { IUpdateUserProps } from '@dtos/users/IUpdateUserDto';
+import { IUpdateUserDto } from '@dtos/users/IUpdateUserDto';
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 
@@ -8,7 +8,7 @@ import { User } from '@domain/users/entities/user';
 
 interface IUpdateUserUseCaseRequest {
   userId: string;
-  data: Partial<IUpdateUserProps>;
+  data: Partial<IUpdateUserDto>;
 }
 
 interface IUpdateUsersUseCaseResponse {

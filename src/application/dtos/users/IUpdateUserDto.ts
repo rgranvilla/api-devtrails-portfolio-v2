@@ -1,4 +1,4 @@
-export interface IUpdateUserProps {
+export interface IUpdateUserDto {
   name: string;
   phone_number: string;
   password: string;

@@ -11,7 +11,7 @@ import { CreateUserSkillUseCase } from './createUserSkillUseCase';
 let sut: CreateUserSkillUseCase;
 let userSkillsRepository: IUserSkillsRepository;
 
-describe('CreateUserSkillUseCase', () => {
+describe('Create User Skill (e2e)', () => {
   const userSkill = {
     user_id: randomUUID(),
     name: 'skill_name',

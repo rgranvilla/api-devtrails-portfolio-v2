@@ -9,7 +9,17 @@ import { IUserSkillsRepository } from '../IUserSkillsRepository';
 
 export class PrismaUserSkillsRepository implements IUserSkillsRepository {
   async findBySkillId(skill_id: string): Promise<UserSkill | null> {
-    throw new Error('Method not implemented.');
+    const existingUserSkill = await prisma.usersSkill.findUnique({
+      where: {
+        id: skill_id,
+      },
+    });
+
+    if (!existingUserSkill) {
+      return null;
+    }
+
+    return UserSkillMapper.toDomain(existingUserSkill);
   }
 
   async findByUserId(user_id: string): Promise<UserSkill[] | null> {
@@ -35,9 +45,18 @@ export class PrismaUserSkillsRepository implements IUserSkillsRepository {
   deleteById(id: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  updateSkill(id: string): Promise<UserSkill> {
-    throw new Error('Method not implemented.');
+
+  async updateSkill(skill_id: string, data: UserSkill): Promise<UserSkill> {
+    const result = await prisma.usersSkill.update({
+      where: {
+        id: skill_id,
+      },
+      data: UserSkillMapper.toDatabase(data),
+    });
+
+    return UserSkillMapper.toDomain(result);
   }
+
   async create({
     user_id,
     name,

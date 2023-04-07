@@ -1,24 +1,42 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithThisIdNotFoundError';
+import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
+import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 
 import { InMemorySkillsRepository } from '@repositories/skills/in-memory/inMemoryUserSkillsRepository';
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
+import { InMemoryUsersRepository } from '@repositories/users/in-memory/inMemoryUsersRepository';
+import { IUsersRepository } from '@repositories/users/IUsersRepository';
+
+import { User } from '@domain/users/entities/user';
 
 import { UpdateUserSkillUseCase } from './updateUserSkillUseCase';
 
 let sut: UpdateUserSkillUseCase;
+let usersRepository: IUsersRepository;
 let userSkillsRepository: IUserSkillsRepository;
+let user: User;
 
 describe('CreateUserSkillUseCase', () => {
-  beforeEach(() => {
+  const dataToUpdate = {
+    name: 'HTML 5',
+    proficiency: 4,
+    description: 'html5_description',
+    skill_icon_url: 'html5_skill_icon_url',
+  };
+
+  beforeEach(async () => {
+    usersRepository = new InMemoryUsersRepository();
     userSkillsRepository = new InMemorySkillsRepository();
-    sut = new UpdateUserSkillUseCase(userSkillsRepository);
+    sut = new UpdateUserSkillUseCase(usersRepository, userSkillsRepository);
+    user = await createNewUserFactory();
+    await usersRepository.create(user);
   });
 
   it('should create a new user skill', async () => {
     const existingUserSkill = await userSkillsRepository.create({
-      user_id: '123e4567-e89b-12d3-a456-426614174000',
+      user_id: user.id,
       name: 'skill_name',
       proficiency: 5,
       description: 'skill_description',
@@ -28,10 +46,7 @@ describe('CreateUserSkillUseCase', () => {
     const result = await sut.execute({
       skill_id: existingUserSkill.id,
       user_id: existingUserSkill.user_id,
-      name: 'HTML 5',
-      proficiency: 4,
-      description: 'html5_description',
-      skill_icon_url: 'html5_skill_icon_url',
+      data: dataToUpdate,
     });
 
     expect(result.userSkill.id).toEqual(expect.any(String));
@@ -48,12 +63,19 @@ describe('CreateUserSkillUseCase', () => {
     await expect(() =>
       sut.execute({
         skill_id: 'inexistent_skill_id',
-        user_id: 'user_id',
-        name: 'HTML 5',
-        proficiency: 4,
-        description: 'html5_description',
-        skill_icon_url: 'html5_skill_icon_url',
+        user_id: user.id,
+        data: dataToUpdate,
       }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    ).rejects.toBeInstanceOf(UserSkillWithThisIdNotFoundError);
+  });
+
+  it('should throw an error if user doesnt exists', async () => {
+    await expect(() =>
+      sut.execute({
+        skill_id: 'any_valid_skill_id',
+        user_id: 'inexistent_user_id',
+        data: dataToUpdate,
+      }),
+    ).rejects.toBeInstanceOf(UserWithThisIdNotFoundError);
   });
 });
