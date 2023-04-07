@@ -11,6 +11,18 @@ import { IUserSkillsRepository } from '../IUserSkillsRepository';
 export class InMemorySkillsRepository implements IUserSkillsRepository {
   public items: IUserSkillProps[] = [];
 
+  async findBySkillId(skill_id: string): Promise<UserSkill | null> {
+    const existingUserSkill = await this.items.find(
+      (item) => item.id === skill_id,
+    );
+
+    if (!existingUserSkill) {
+      return null;
+    }
+
+    return UserSkillMapper.toDomain(existingUserSkill);
+  }
+
   async findByUserId(userId: string): Promise<UserSkill[] | null> {
     const skills = this.items.filter((item) => item.user_id === userId);
 
@@ -27,25 +39,31 @@ export class InMemorySkillsRepository implements IUserSkillsRepository {
     name: string,
     userId: string,
   ): Promise<UserSkill | null> {
-    const skill = this.items.find(
+    const existingUserSkill = this.items.find(
       (item) => item.user_id === userId && item.name === name,
     );
 
-    if (!skill) {
+    if (!existingUserSkill) {
       return null;
     }
 
-    const parsedSkill = UserSkillMapper.toDomain(skill);
-
-    return parsedSkill;
+    return UserSkillMapper.toDomain(existingUserSkill);
   }
 
   async deleteById(id: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
 
-  async updateSkill(id: string): Promise<UserSkill> {
-    throw new Error('Method not implemented.');
+  async updateSkill(skill_id: string, data: UserSkill): Promise<UserSkill> {
+    const userSkillIndex = this.items.findIndex((item) => item.id === skill_id);
+
+    const userSkillToUpdate = UserSkillMapper.toDatabase(data);
+
+    this.items[userSkillIndex] = {
+      ...userSkillToUpdate,
+    };
+
+    return data;
   }
 
   async create({
@@ -55,15 +73,15 @@ export class InMemorySkillsRepository implements IUserSkillsRepository {
     description,
     skill_icon_url,
   }: ICreateUserSkillDTO): Promise<UserSkill> {
-    const skill = new UserSkill({
+    const userSkill = new UserSkill({
       user_id,
       name,
       proficiency,
       description,
       skill_icon_url,
     });
-    this.items.push(UserSkillMapper.toDatabase(skill));
+    this.items.push(UserSkillMapper.toDatabase(userSkill));
 
-    return skill;
+    return userSkill;
   }
 }

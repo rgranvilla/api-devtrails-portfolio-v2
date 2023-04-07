@@ -1,4 +1,4 @@
-import { UserSkillAlreadyExistError } from '@errors/skills/userSkillAlreadyExistError';
+import { UserSkillAlreadyExistsError } from '@errors/skills/userSkillAlreadyExistsError';
 
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
 
@@ -26,24 +26,14 @@ export class CreateUserSkillUseCase {
     proficiency,
     skill_icon_url,
   }: ICreateUserSkillUseCaseRequest): Promise<ICreateUserSkillUseCaseResponse> {
-    const userSkill = await this.userSkillsRepository.findByNameAndUserId(
-      name,
-      user_id,
-    );
+    const existingUserSkill =
+      await this.userSkillsRepository.findByNameAndUserId(name, user_id);
 
-    if (userSkill !== null) {
-      throw new UserSkillAlreadyExistError();
+    if (existingUserSkill !== null) {
+      throw new UserSkillAlreadyExistsError();
     }
 
-    const createdUserSkill = new UserSkill({
-      user_id,
-      name,
-      description,
-      proficiency,
-      skill_icon_url,
-    });
-
-    await this.userSkillsRepository.create({
+    const userSkill = await this.userSkillsRepository.create({
       user_id,
       name,
       description,
@@ -52,7 +42,7 @@ export class CreateUserSkillUseCase {
     });
 
     return {
-      userSkill: createdUserSkill,
+      userSkill,
     };
   }
 }

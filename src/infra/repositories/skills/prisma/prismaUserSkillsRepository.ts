@@ -1,15 +1,32 @@
+import { prisma } from '@database/lib';
+
 import { ICreateUserSkillDTO } from '@dtos/skills/ICreateUserSkillDto';
+import { UserSkillMapper } from '@mappers/skills/userSkillMapper';
 
 import { UserSkill } from '@domain/skills/entities/userSkill';
 
 import { IUserSkillsRepository } from '../IUserSkillsRepository';
 
 export class PrismaUserSkillsRepository implements IUserSkillsRepository {
-  findByUserId(user_id: string): Promise<UserSkill[] | null> {
+  async findByUserId(user_id: string): Promise<UserSkill[] | null> {
     throw new Error('Method not implemented.');
   }
-  findByNameAndUserId(name: string, userId: string): Promise<UserSkill | null> {
-    throw new Error('Method not implemented.');
+  async findByNameAndUserId(
+    name: string,
+    user_id: string,
+  ): Promise<UserSkill | null> {
+    const existingUserSkill = await prisma.usersSkill.findFirst({
+      where: {
+        name,
+        user_id,
+      },
+    });
+
+    if (!existingUserSkill) {
+      return null;
+    }
+
+    return UserSkillMapper.toDomain(existingUserSkill);
   }
   deleteById(id: string): Promise<void> {
     throw new Error('Method not implemented.');
@@ -17,12 +34,25 @@ export class PrismaUserSkillsRepository implements IUserSkillsRepository {
   updateSkill(id: string): Promise<UserSkill> {
     throw new Error('Method not implemented.');
   }
-  create({
+  async create({
     user_id,
     name,
+    proficiency = 0,
     description,
     skill_icon_url,
   }: ICreateUserSkillDTO): Promise<UserSkill> {
-    throw new Error('Method not implemented.');
+    const userSkill = new UserSkill({
+      user_id,
+      name,
+      proficiency,
+      description,
+      skill_icon_url,
+    });
+
+    await prisma.usersSkill.create({
+      data: UserSkillMapper.toDatabase(userSkill),
+    });
+
+    return userSkill;
   }
 }

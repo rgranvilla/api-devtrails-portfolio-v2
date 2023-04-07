@@ -3,7 +3,9 @@ import { ICreateUserSkillDTO } from '@dtos/skills/ICreateUserSkillDto';
 import { UserSkill } from '@domain/skills/entities/userSkill';
 
 export abstract class IUserSkillsRepository {
-  abstract findByUserId(userId: string): Promise<UserSkill[] | null>;
+  abstract findBySkillId(skill_id: string): Promise<UserSkill | null>;
+
+  abstract findByUserId(user_id: string): Promise<UserSkill[] | null>;
 
   abstract findByNameAndUserId(
     name: string,
@@ -12,7 +14,7 @@ export abstract class IUserSkillsRepository {
 
   abstract deleteById(id: string): Promise<void>;
 
-  abstract updateSkill(id: string): Promise<UserSkill>;
+  abstract updateSkill(skill_id: string, data: UserSkill): Promise<UserSkill>;
 
   abstract create({
     user_id,
