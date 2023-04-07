@@ -1,4 +1,5 @@
-import { passwordHashing } from '@core/utils/passwordHashing';
+import { passwordHashing } from '@shared/utils/passwordHashing';
+
 import { UserAlreadyExistsError } from '@errors/users/userAlreadyExistsError';
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';

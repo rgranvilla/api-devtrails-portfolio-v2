@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 
-import { Replace } from '@core/helpers/replace';
+import { Replace } from '@shared/helpers/replace';
 
 interface IUserTokenProps {
   user_id: string;

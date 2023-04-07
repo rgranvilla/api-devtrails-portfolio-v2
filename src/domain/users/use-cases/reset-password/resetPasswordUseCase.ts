@@ -1,5 +1,6 @@
-import { IDateProvider } from '@core/providers/date-provider/IDateProvider';
-import { passwordHashing } from '@core/utils/passwordHashing';
+import { IDateProvider } from '@shared/providers/date-provider/IDateProvider';
+import { passwordHashing } from '@shared/utils/passwordHashing';
+
 import { TokenExpiredError } from '@errors/users/tokenExpiredError';
 import { TokenInvalidError } from '@errors/users/tokenInvalidError';
 

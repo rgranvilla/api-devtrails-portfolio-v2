@@ -1,5 +1,5 @@
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
-import { passwordHashing } from '@core/utils/passwordHashing';
+import { ResourceNotFoundError } from '@shared/errors/resourceNotFoundError';
+import { passwordHashing } from '@shared/utils/passwordHashing';
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 

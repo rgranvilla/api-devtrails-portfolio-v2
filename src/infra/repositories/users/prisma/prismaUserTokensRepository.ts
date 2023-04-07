@@ -1,4 +1,4 @@
-import { prisma } from '@core/database/lib';
+import { prisma } from '@database/lib';
 
 import { ICreateUserTokenDTO } from '@dtos/users/ICreateUserTokenDto';
 import { UserTokenMapper } from '@mappers/users/userTokenMapper';

@@ -2,7 +2,7 @@ import { hash } from 'bcryptjs';
 import { FastifyInstance } from 'fastify';
 import request from 'supertest';
 
-import { prisma } from '@core/database/lib';
+import { prisma } from '@database/lib';
 
 export async function createAndAuthenticateUser(
   app: FastifyInstance,

@@ -1,5 +1,6 @@
-import { env } from '@core/config/env';
-import { IMailProvider } from '@core/providers/mail-provider/IMailProvider';
+import { env } from '@env';
+
+import { IMailProvider } from '@shared/providers/mail-provider/IMailProvider';
 
 import { EtherealMailProvider } from './implementations/etherealMailProvider';
 import { SESMailProvider } from './implementations/sesMailProvider';

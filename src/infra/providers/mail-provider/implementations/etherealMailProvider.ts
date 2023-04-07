@@ -2,7 +2,7 @@ import fs from 'fs';
 import handlebars from 'handlebars';
 import nodemailer, { Transporter } from 'nodemailer';
 
-import { IMailProvider } from '@core/providers/mail-provider/IMailProvider';
+import { IMailProvider } from '@shared/providers/mail-provider/IMailProvider';
 
 export class EtherealMailProvider implements IMailProvider {
   private client: Transporter | undefined;

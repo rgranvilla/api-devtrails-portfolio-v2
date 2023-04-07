@@ -1,7 +1,7 @@
 import { compare } from 'bcryptjs';
 import { describe, expect, it } from 'vitest';
 
-import { passwordHashing } from '@core/utils/passwordHashing';
+import { passwordHashing } from '@shared/utils/passwordHashing';
 
 import { User } from './user';
 

@@ -1,4 +1,4 @@
-import { IDateProvider } from '@core/providers/date-provider/IDateProvider';
+import { IDateProvider } from '@shared/providers/date-provider/IDateProvider';
 
 import { DayjsDateProvider } from './implementations/dayjsDateProvider';
 

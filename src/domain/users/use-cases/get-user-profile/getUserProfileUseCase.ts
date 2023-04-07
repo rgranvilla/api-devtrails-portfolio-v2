@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { ResourceNotFoundError } from '@shared/errors/resourceNotFoundError';
 
 import { IUserProps, UserMapper } from '@mappers/users/userMapper';
 

@@ -1,4 +1,4 @@
-import { prisma } from '@core/database/lib';
+import { prisma } from '@database/lib';
 
 import { IUserProps, UserMapper } from '@mappers/users/userMapper';
 

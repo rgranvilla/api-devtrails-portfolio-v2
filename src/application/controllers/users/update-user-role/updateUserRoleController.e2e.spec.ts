@@ -3,7 +3,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { app } from '@app';
 
-import { createAndAuthenticateUser } from '@core/utils/tests/createAndAuthenticateUser';
+import { createAndAuthenticateUser } from '@shared/utils/tests/createAndAuthenticateUser';
 
 let adminToken: string;
 let adminId: string;

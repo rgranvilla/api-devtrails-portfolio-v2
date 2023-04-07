@@ -1,5 +1,11 @@
 # api-devtrails-portfolio-v2
 
+## 0.2.1
+
+### Patch Changes
+
+- modifie folder structure
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 
-import { verifyJwt } from '@core/middlewares/verifyJWT';
-import { verifyUserRole } from '@core/middlewares/verifyUserRole';
+import { verifyJwt } from '@shared/middlewares/verifyJWT';
+import { verifyUserRole } from '@shared/middlewares/verifyUserRole';
 
 import { createUserController } from '@controllers/users/create-user/createUserController';
 import { getUserProfileController } from '@controllers/users/get-user-profile/getUserProfileController';
