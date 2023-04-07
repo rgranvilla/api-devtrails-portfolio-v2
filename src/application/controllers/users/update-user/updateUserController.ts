@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { ResourceNotFoundError } from '@shared/errors/resourceNotFoundError';
+import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
 
 import { UserMapper } from '@mappers/users/userMapper';
 

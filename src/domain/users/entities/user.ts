@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 
-import { Replace } from '@shared/helpers/replace';
+import { Replace } from '@core/helpers/replace';
 
 interface IUserProps {
   name: string;

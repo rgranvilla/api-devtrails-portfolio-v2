@@ -54,8 +54,8 @@
         "newlinesBetween": "always",
         "groups": [
           "module",
-          ["/^@app/", "/^@server/", "/^@env/", "/^@database/"],
-          ["/^@shared/"],
+          ["/^@app/", "/^@server/", "/^@env/", "/^@appConfig/", "/^@database/"],
+          ["/^@core/"],
           ["/^@errors/", "/^@factories/", "/^@views/"],
           ["/^@mappers/", "/^@dtos/"],
           ["/^@providers/", "/^@repositories/"],

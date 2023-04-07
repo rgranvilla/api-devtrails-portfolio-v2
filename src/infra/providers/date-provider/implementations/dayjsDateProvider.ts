@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 
-import { IDateProvider } from '@shared/providers/date-provider/IDateProvider';
+import { IDateProvider } from '@core/providers/date-provider/IDateProvider';
 
 dayjs.extend(utc);
 

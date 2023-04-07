@@ -1,11 +1,11 @@
 {
   "name": "api-devtrails-portfolio-v2",
-  "version": "0.2.1",
-  "main": "index.js",
+  "version": "0.3.0",
+  "main": "src/core/server.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "start": "node build/server.js",
+    "dev": "tsx watch src/core/server.ts",
+    "start": "node build/core/server.js",
     "build": "tsup src --out-dir build",
     "lint": "npx eslint --ext .tsx,.ts",
     "format": "prettier --write \"src/**/*.ts\"",

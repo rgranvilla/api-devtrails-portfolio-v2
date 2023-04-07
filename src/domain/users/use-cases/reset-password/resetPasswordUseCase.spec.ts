@@ -2,7 +2,7 @@ import { compare } from 'bcryptjs';
 import { randomUUID } from 'node:crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { IDateProvider } from '@shared/providers/date-provider/IDateProvider';
+import { IDateProvider } from '@core/providers/date-provider/IDateProvider';
 
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 

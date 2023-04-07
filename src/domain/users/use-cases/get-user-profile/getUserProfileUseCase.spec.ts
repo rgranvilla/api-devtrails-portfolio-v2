@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ResourceNotFoundError } from '@shared/errors/resourceNotFoundError';
+import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
 
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 

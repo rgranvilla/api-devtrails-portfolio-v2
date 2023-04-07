@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ResourceNotFoundError } from '@shared/errors/resourceNotFoundError';
-import { IDateProvider } from '@shared/providers/date-provider/IDateProvider';
-import { IMailProvider } from '@shared/providers/mail-provider/IMailProvider';
+import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { IDateProvider } from '@core/providers/date-provider/IDateProvider';
+import { IMailProvider } from '@core/providers/mail-provider/IMailProvider';
 
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 

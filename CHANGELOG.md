@@ -1,5 +1,11 @@
 # api-devtrails-portfolio-v2
 
+## 0.3.0
+
+### Minor Changes
+
+- Refactored app.ts for better separation of concerns by extracting error handling logic to errorHandler.ts, configuration logic to appConfig.ts, and middleware registration logic to registerMiddleware.ts. Renamed shared folder to core to better reflect its purpose. Refactored compilerOptions paths in tsconfig.json and updated import paths to reflect changes. Also updated the import order in imports-helpers/order-imports.ts to match the new paths in tsconfig and grouped imports by type
+
 ## 0.2.1
 
 ### Patch Changes

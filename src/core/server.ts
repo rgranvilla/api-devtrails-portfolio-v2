@@ -1,6 +1,5 @@
+import { app } from '@app';
 import { env } from '@env';
-
-import { app } from './app';
 
 app
   .listen({
@@ -9,4 +8,8 @@ app
   })
   .then(() => {
     console.log(`🚀 HTTP Server Running on ${env.API_BASE_URL}:${env.PORT}`);
+  })
+  .catch((err: unknown) => {
+    console.error(err);
+    process.exit(1);
   });

@@ -1,4 +1,4 @@
-import { ResourceNotFoundError } from '@shared/errors/resourceNotFoundError';
+import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 

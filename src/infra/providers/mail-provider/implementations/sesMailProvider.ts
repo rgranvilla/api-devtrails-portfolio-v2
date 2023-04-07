@@ -5,7 +5,7 @@ import nodemailer, { Transporter } from 'nodemailer';
 
 import { env } from '@env';
 
-import { IMailProvider } from '@shared/providers/mail-provider/IMailProvider';
+import { IMailProvider } from '@core/providers/mail-provider/IMailProvider';
 
 export class SESMailProvider implements IMailProvider {
   private client: Transporter;
