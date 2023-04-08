@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
 
-import { env } from '@env';
+import { env } from '@config/env';
 
 import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
 import { IDateProvider } from '@core/providers/date-provider/IDateProvider';

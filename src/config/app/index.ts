@@ -1,17 +1,19 @@
-import { env } from '@env';
+import { auth } from '@config/auth';
 
 import packageJson from '../../../package.json';
+
+const { secret_token, expires_in_token } = auth;
 
 export const appConfig = {
   version: packageJson.version,
   jwt: {
-    secret: env.JWT_SECRET,
+    secret: secret_token,
     cookie: {
       cookieName: 'refreshToken',
       signed: false,
     },
     sign: {
-      expiresIn: '10m',
+      expiresIn: expires_in_token,
     },
     decode: {
       complete: true,

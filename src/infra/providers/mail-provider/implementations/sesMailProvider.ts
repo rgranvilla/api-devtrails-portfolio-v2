@@ -3,7 +3,7 @@ import fs from 'fs';
 import handlebars from 'handlebars';
 import nodemailer, { Transporter } from 'nodemailer';
 
-import { env } from '@env';
+import { env } from '@config/env';
 
 import { IMailProvider } from '@core/providers/mail-provider/IMailProvider';
 

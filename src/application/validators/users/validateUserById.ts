@@ -2,7 +2,7 @@ import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoun
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 
-export async function validateUser(
+export async function validateUserById(
   user_id: string,
   usersRepository: IUsersRepository,
 ) {

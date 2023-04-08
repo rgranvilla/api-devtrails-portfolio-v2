@@ -1,6 +1,5 @@
 import { prisma } from '@database/lib';
 
-import { ICreateUserTokenDTO } from '@dtos/users/ICreateUserTokenDto';
 import { UserTokenMapper } from '@mappers/users/userTokenMapper';
 
 import { UserToken } from '@domain/users/entities/userToken';
@@ -48,23 +47,13 @@ export class PrismaUserTokensRepository implements IUserTokensRepository {
     });
   }
 
-  async create({
-    expires_date,
-    refresh_token,
-    user_id,
-  }: ICreateUserTokenDTO): Promise<UserToken> {
-    const newUserToken = new UserToken({
-      expires_date,
-      refresh_token,
-      user_id,
-    });
-
-    const raw = UserTokenMapper.toDatabase(newUserToken);
+  async create(user_token: UserToken): Promise<UserToken> {
+    const userToken = UserTokenMapper.toDatabase(user_token);
 
     await prisma.usersToken.create({
-      data: raw,
+      data: userToken,
     });
 
-    return UserTokenMapper.toDomain(raw);
+    return UserTokenMapper.toDomain(userToken);
   }
 }

@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
-
+import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 
 import { InMemoryUsersRepository } from '@repositories/users/in-memory/inMemoryUsersRepository';
@@ -26,7 +25,7 @@ describe('Get User Profile Use Case', () => {
     );
 
     const { user } = await sut.execute({
-      userId: createdUser.id,
+      user_id: createdUser.id,
     });
 
     expect(user.id).toEqual(expect.any(String));
@@ -41,8 +40,8 @@ describe('Get User Profile Use Case', () => {
   it('should not be able to get user profile with wrong id', async () => {
     await expect(() =>
       sut.execute({
-        userId: 'non-existing-id',
+        user_id: 'non-existing-id',
       }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    ).rejects.toBeInstanceOf(UserWithThisIdNotFoundError);
   });
 });

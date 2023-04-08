@@ -1,7 +1,7 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
 import { ZodError } from 'zod';
 
-import { env } from '@env';
+import { env } from '@config/env';
 
 export function errorHandler(
   error: FastifyError,

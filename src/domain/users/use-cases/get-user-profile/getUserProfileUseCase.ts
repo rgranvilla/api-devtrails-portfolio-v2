@@ -1,11 +1,11 @@
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { validateUserById } from 'src/application/validators/users/validateUserById';
 
 import { IUserProps, UserMapper } from '@mappers/users/userMapper';
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 
 interface IGetUserProfileUseCaseRequest {
-  userId: string;
+  user_id: string;
 }
 
 interface IGetUserProfileUseCaseResponse {
@@ -16,15 +16,11 @@ export class GetUserProfileUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute({
-    userId,
+    user_id,
   }: IGetUserProfileUseCaseRequest): Promise<IGetUserProfileUseCaseResponse> {
-    const raw = await this.usersRepository.findById(userId);
+    const existingUser = await validateUserById(user_id, this.usersRepository);
 
-    if (!raw) {
-      throw new ResourceNotFoundError();
-    }
-
-    const user = UserMapper.toHttp(raw);
+    const user = UserMapper.toHttp(existingUser);
 
     return {
       user,

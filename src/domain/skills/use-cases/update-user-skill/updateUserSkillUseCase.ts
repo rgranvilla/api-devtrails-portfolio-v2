@@ -1,11 +1,12 @@
+import { validateUserSkill } from 'src/application/validators/skills/validateUserSkill';
+import { validateUserById } from 'src/application/validators/users/validateUserById';
+
 import { IUpdateUserSkillDto } from '@dtos/skills/IUpdateUserSkillDto';
 
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 
 import { UserSkill } from '@domain/skills/entities/userSkill';
-import { validateUserSkill } from '@domain/skills/validators/validateUserSkill';
-import { validateUser } from '@domain/users/validators/validateUser';
 
 interface IUpdateUserSkillUseCaseRequest {
   skill_id: string;
@@ -28,7 +29,7 @@ export class UpdateUserSkillUseCase {
     user_id,
     data,
   }: IUpdateUserSkillUseCaseRequest): Promise<IUpdateUserSkillUseCaseResponse> {
-    await validateUser(user_id, this.usersRepository);
+    await validateUserById(user_id, this.usersRepository);
     const existingUserSkill = await validateUserSkill(
       skill_id,
       this.userSkillsRepository,

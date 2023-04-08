@@ -6,8 +6,7 @@
     "paths": {
         "@app": ["./src/core/app.ts"],
         "@server": ["./src/core/server.ts"],
-        "@env": ["./src/config/env/index.ts"],
-        "@appConfig": ["./src/config/app/index.ts"],
+        "@config/*": ["./src/config/*"],
         "@database/*": ["./src/database/*"], 
         "@controllers/*": ["./src/application/controllers/*"],
         "@dtos/*": ["./src/application/dtos/*"],

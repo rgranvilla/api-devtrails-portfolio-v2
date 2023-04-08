@@ -5,7 +5,7 @@ import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import { FastifyInstance } from 'fastify';
 
-import { appConfig } from '@appConfig';
+import { appConfig } from '@config/app';
 
 import { appRoutes } from '@routes/index.js';
 

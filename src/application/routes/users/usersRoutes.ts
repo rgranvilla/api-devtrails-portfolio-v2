@@ -11,7 +11,11 @@ import { updateUserController } from '@controllers/users/update-user/updateUserC
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/users/create', createUserController);
-  app.get('/users/profile', { onRequest: verifyJwt }, getUserProfileController);
+  app.get(
+    '/users/:user_id/profile',
+    { onRequest: verifyJwt },
+    getUserProfileController,
+  );
 
   app.patch(
     '/users/:userId/update-password',

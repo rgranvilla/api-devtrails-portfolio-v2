@@ -1,4 +1,4 @@
-import { env } from '@env';
+import { env } from '@config/env';
 
 import { IMailProvider } from '@core/providers/mail-provider/IMailProvider';
 
