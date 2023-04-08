@@ -1,3 +1,4 @@
+import { validateUserSkillById } from 'src/application/validators/skills/validateUserSkillById';
 import { validateUserById } from 'src/application/validators/users/validateUserById';
 
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
@@ -22,7 +23,10 @@ export class GetUserSkillByIdUseCase {
 
   async execute({ user_id, skill_id }: IRequest): Promise<IResponse> {
     await validateUserById(user_id, this.usersRepository);
-    const userSkill = await this.userSkillsRepository.findBySkillId(skill_id);
+    const userSkill = await validateUserSkillById(
+      skill_id,
+      this.userSkillsRepository,
+    );
 
     return {
       userSkill,

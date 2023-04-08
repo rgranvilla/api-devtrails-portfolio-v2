@@ -4,8 +4,6 @@ import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoun
 import { createNewUserSkillFactory } from '@factories/skills/createNewUserSkillFactory';
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 
-import { UserSkillMapper } from '@mappers/skills/userSkillMapper';
-
 import { InMemorySkillsRepository } from '@repositories/skills/in-memory/inMemoryUserSkillsRepository';
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
 import { InMemoryUsersRepository } from '@repositories/users/in-memory/inMemoryUsersRepository';
@@ -58,7 +56,6 @@ describe('Get All User Skills Use Case', () => {
     const { userSkills } = await sut.execute({
       user_id,
     });
-    console.log(userSkills?.map((skill) => UserSkillMapper.toHttp(skill)));
 
     expect(userSkills?.length).toBe(2);
     if (userSkills) {

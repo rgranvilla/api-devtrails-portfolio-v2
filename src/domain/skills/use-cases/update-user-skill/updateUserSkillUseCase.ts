@@ -1,4 +1,4 @@
-import { validateUserSkill } from 'src/application/validators/skills/validateUserSkill';
+import { validateUserSkillById } from 'src/application/validators/skills/validateUserSkillById';
 import { validateUserById } from 'src/application/validators/users/validateUserById';
 
 import { IUpdateUserSkillDto } from '@dtos/skills/IUpdateUserSkillDto';
@@ -30,7 +30,7 @@ export class UpdateUserSkillUseCase {
     data,
   }: IUpdateUserSkillUseCaseRequest): Promise<IUpdateUserSkillUseCaseResponse> {
     await validateUserById(user_id, this.usersRepository);
-    const existingUserSkill = await validateUserSkill(
+    const existingUserSkill = await validateUserSkillById(
       skill_id,
       this.userSkillsRepository,
     );

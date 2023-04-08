@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import { beforeEach, describe, expect, it } from 'vitest';
 
+import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithThisIdNotFoundError';
 import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
 import { createNewUserSkillFactory } from '@factories/skills/createNewUserSkillFactory';
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
@@ -74,6 +75,15 @@ describe('Get All User Skills Use Case', () => {
     if (secondResponse) {
       expect(secondResponse.name).toBe('CSS 3');
     }
+  });
+
+  it('should throw an error if skill to updated doesnt exists', async () => {
+    await expect(() =>
+      sut.execute({
+        skill_id: 'inexistent_skill_id',
+        user_id: user.id,
+      }),
+    ).rejects.toBeInstanceOf(UserSkillWithThisIdNotFoundError);
   });
 
   it('should throw an error if user doesnt exists', async () => {

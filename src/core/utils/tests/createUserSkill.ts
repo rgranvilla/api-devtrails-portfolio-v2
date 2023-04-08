@@ -3,18 +3,15 @@ import request from 'supertest';
 
 import { UserSkill } from '@domain/skills/entities/userSkill';
 
-import { createAndAuthenticateUser } from './createAndAuthenticateUser';
-
 type Override = Partial<UserSkill>;
 
 export async function createUserSkill(
   app: FastifyInstance,
+  user_id: string,
   override?: Override,
 ) {
-  const { id } = await createAndAuthenticateUser(app);
-
   const response = await request(app.server)
-    .post(`/${id}/skills/create`)
+    .post(`/${user_id}/skills/create`)
     .send({
       name: override?.name ?? 'skill_name',
       proficiency: override?.proficiency ?? 5,
@@ -26,6 +23,6 @@ export async function createUserSkill(
 
   return {
     userSkill,
-    userId: id,
+    userId: user_id,
   };
 }

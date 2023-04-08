@@ -8,7 +8,7 @@ import { createUserSkill } from '@core/utils/tests/createUserSkill';
 
 import { UserSkill } from '@domain/skills/entities/userSkill';
 
-describe('Delete User Skill (e2e)', () => {
+describe('Get All User Skills (e2e)', () => {
   let userSkillData: {
     userSkill: UserSkill;
     userId: string;
@@ -20,38 +20,32 @@ describe('Delete User Skill (e2e)', () => {
 
   beforeAll(async () => {
     await app.ready();
+
     userData = await createAndAuthenticateUser(app);
-    userSkillData = await createUserSkill(app, userData.id);
+
+    await createUserSkill(app, userData.id, {
+      name: 'NodeJs',
+      proficiency: 5,
+    });
+    userSkillData = await createUserSkill(app, userData.id, {
+      name: 'HTML 5',
+      proficiency: 5,
+    });
   });
 
   afterAll(async () => {
     await app.close();
   });
 
-  it('should be able to delete an user skill', async () => {
-    const { userSkill, userId } = userSkillData;
+  it('should be able to get an user skill by skill id', async () => {
+    const { userId } = userSkillData;
 
-    const result = await request(app.server)
-      .delete(`/${userId}/skills/${userSkill.id}/delete`)
-      .send();
+    const result = await request(app.server).get(`/${userId}/skills`).send();
 
     expect(result.status).toBe(200);
-    expect(result.body.message).toBe(
-      `User Skill with id ${userSkill.id} was deleted.`,
-    );
-  });
-
-  it('should throw error if user skill id doesnt exists', async () => {
-    const { userId } = userSkillData;
-    const wrongUserSkillId = '123e4567-e89b-12d3-a456-426614174000';
-    const result = await request(app.server)
-      .delete(`/${userId}/skills/${wrongUserSkillId}/delete`)
-      .send();
-    const { message } = result.body;
-    expect(result.status).toBe(404);
-    expect(message).toBe(
-      `The user skill with id ${wrongUserSkillId} not found.`,
-    );
+    expect(result.body).toHaveLength(2);
+    expect(result.body[0].name).toBe('NodeJs');
+    expect(result.body[1].name).toBe('HTML 5');
   });
 
   it('should throw error if user id doesnt exists', async () => {

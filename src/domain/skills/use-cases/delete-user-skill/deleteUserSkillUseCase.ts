@@ -1,4 +1,4 @@
-import { validateUserSkill } from 'src/application/validators/skills/validateUserSkill';
+import { validateUserSkillById } from 'src/application/validators/skills/validateUserSkillById';
 import { validateUserById } from 'src/application/validators/users/validateUserById';
 
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
@@ -20,7 +20,7 @@ export class DeleteUserSkillUseCase {
     skill_id,
   }: IDeleteUserSkillUseCaseRequest): Promise<void> {
     await validateUserById(user_id, this.usersRepository);
-    await validateUserSkill(skill_id, this.userSkillsRepository);
+    await validateUserSkillById(skill_id, this.userSkillsRepository);
 
     await this.userSkillsRepository.deleteById(skill_id);
   }

@@ -2,7 +2,7 @@ import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithTh
 
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
 
-export async function validateUserSkill(
+export async function validateUserSkillById(
   skill_id: string,
   userSkillsRepository: IUserSkillsRepository,
 ) {
