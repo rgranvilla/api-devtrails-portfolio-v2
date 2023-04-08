@@ -1,6 +1,5 @@
 import { prisma } from '@database/lib';
 
-import { ICreateUserSkillDTO } from '@dtos/skills/ICreateUserSkillDto';
 import { UserSkillMapper } from '@mappers/skills/userSkillMapper';
 
 import { UserSkill } from '@domain/skills/entities/userSkill';
@@ -42,8 +41,13 @@ export class PrismaUserSkillsRepository implements IUserSkillsRepository {
 
     return UserSkillMapper.toDomain(existingUserSkill);
   }
-  deleteById(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+
+  async deleteById(id: string): Promise<void> {
+    await prisma.usersSkill.delete({
+      where: {
+        id,
+      },
+    });
   }
 
   async updateSkill(skill_id: string, data: UserSkill): Promise<UserSkill> {
@@ -57,21 +61,7 @@ export class PrismaUserSkillsRepository implements IUserSkillsRepository {
     return UserSkillMapper.toDomain(result);
   }
 
-  async create({
-    user_id,
-    name,
-    proficiency = 0,
-    description,
-    skill_icon_url,
-  }: ICreateUserSkillDTO): Promise<UserSkill> {
-    const userSkill = new UserSkill({
-      user_id,
-      name,
-      proficiency,
-      description,
-      skill_icon_url,
-    });
-
+  async create(userSkill: UserSkill): Promise<UserSkill> {
     await prisma.usersSkill.create({
       data: UserSkillMapper.toDatabase(userSkill),
     });

@@ -1,4 +1,3 @@
-import { ICreateUserSkillDTO } from '@dtos/skills/ICreateUserSkillDto';
 import {
   IUserSkillProps,
   UserSkillMapper,
@@ -12,9 +11,7 @@ export class InMemorySkillsRepository implements IUserSkillsRepository {
   public items: IUserSkillProps[] = [];
 
   async findBySkillId(skill_id: string): Promise<UserSkill | null> {
-    const existingUserSkill = await this.items.find(
-      (item) => item.id === skill_id,
-    );
+    const existingUserSkill = this.items.find((item) => item.id === skill_id);
 
     if (!existingUserSkill) {
       return null;
@@ -51,7 +48,14 @@ export class InMemorySkillsRepository implements IUserSkillsRepository {
   }
 
   async deleteById(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+    const existingUserSkillIndex = this.items.findIndex(
+      (item) => item.id === id,
+    );
+
+    if (existingUserSkillIndex === -1) {
+      return;
+    }
+    this.items.splice(existingUserSkillIndex, 1);
   }
 
   async updateSkill(skill_id: string, data: UserSkill): Promise<UserSkill> {
@@ -66,20 +70,7 @@ export class InMemorySkillsRepository implements IUserSkillsRepository {
     return data;
   }
 
-  async create({
-    user_id,
-    name,
-    proficiency = 0,
-    description,
-    skill_icon_url,
-  }: ICreateUserSkillDTO): Promise<UserSkill> {
-    const userSkill = new UserSkill({
-      user_id,
-      name,
-      proficiency,
-      description,
-      skill_icon_url,
-    });
+  async create(userSkill: UserSkill): Promise<UserSkill> {
     this.items.push(UserSkillMapper.toDatabase(userSkill));
 
     return userSkill;

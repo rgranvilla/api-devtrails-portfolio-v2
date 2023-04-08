@@ -1,12 +1,11 @@
-import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithThisIdNotFoundError';
-import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
-
 import { IUpdateUserSkillDto } from '@dtos/skills/IUpdateUserSkillDto';
 
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 
 import { UserSkill } from '@domain/skills/entities/userSkill';
+import { validateUserSkill } from '@domain/skills/validators/validateUserSkill';
+import { validateUser } from '@domain/users/validators/validateUser';
 
 interface IUpdateUserSkillUseCaseRequest {
   skill_id: string;
@@ -29,19 +28,11 @@ export class UpdateUserSkillUseCase {
     user_id,
     data,
   }: IUpdateUserSkillUseCaseRequest): Promise<IUpdateUserSkillUseCaseResponse> {
-    const existingUser = await this.usersRepository.findById(user_id);
-
-    if (!existingUser) {
-      throw new UserWithThisIdNotFoundError(user_id);
-    }
-
-    const existingUserSkill = await this.userSkillsRepository.findBySkillId(
+    await validateUser(user_id, this.usersRepository);
+    const existingUserSkill = await validateUserSkill(
       skill_id,
+      this.userSkillsRepository,
     );
-
-    if (!existingUserSkill) {
-      throw new UserSkillWithThisIdNotFoundError(skill_id);
-    }
 
     const userSkillToUpdate = new UserSkill(
       {

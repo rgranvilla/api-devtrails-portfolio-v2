@@ -23,7 +23,7 @@ export class EtherealMailProvider implements IMailProvider {
 
         this.client = transporter;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }
 
   async sendMail(
@@ -46,8 +46,8 @@ export class EtherealMailProvider implements IMailProvider {
         html: templateHTML,
       });
 
-      console.log('Message sent: %s', message.messageId);
-      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
+      console.info('Message sent: %s', message.messageId);
+      console.info('Preview URL: %s', nodemailer.getTestMessageUrl(message));
     }
   }
 }

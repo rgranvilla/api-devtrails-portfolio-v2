@@ -33,13 +33,15 @@ export class CreateUserSkillUseCase {
       throw new UserSkillAlreadyExistsError();
     }
 
-    const userSkill = await this.userSkillsRepository.create({
+    const userSkill = new UserSkill({
       user_id,
       name,
       description,
       proficiency,
       skill_icon_url,
     });
+
+    await this.userSkillsRepository.create(userSkill);
 
     return {
       userSkill,

@@ -1,5 +1,3 @@
-import { ICreateUserSkillDTO } from '@dtos/skills/ICreateUserSkillDto';
-
 import { UserSkill } from '@domain/skills/entities/userSkill';
 
 export abstract class IUserSkillsRepository {
@@ -12,15 +10,9 @@ export abstract class IUserSkillsRepository {
     userId: string,
   ): Promise<UserSkill | null>;
 
-  abstract deleteById(id: string): Promise<void>;
+  abstract deleteById(skill_id: string): Promise<void>;
 
   abstract updateSkill(skill_id: string, data: UserSkill): Promise<UserSkill>;
 
-  abstract create({
-    user_id,
-    name,
-    proficiency,
-    description,
-    skill_icon_url,
-  }: ICreateUserSkillDTO): Promise<UserSkill>;
+  abstract create(userSkill: UserSkill): Promise<UserSkill>;
 }
