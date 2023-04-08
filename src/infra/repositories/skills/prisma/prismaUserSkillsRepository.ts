@@ -22,8 +22,23 @@ export class PrismaUserSkillsRepository implements IUserSkillsRepository {
   }
 
   async findByUserId(user_id: string): Promise<UserSkill[] | null> {
-    throw new Error('Method not implemented.');
+    const existingUserSkills = await prisma.usersSkill.findMany({
+      where: {
+        user_id,
+      },
+    });
+
+    if (existingUserSkills.length === 0) {
+      return null;
+    }
+
+    const userSkills = existingUserSkills.map((skill) =>
+      UserSkillMapper.toDomain(skill),
+    );
+
+    return userSkills;
   }
+
   async findByNameAndUserId(
     name: string,
     user_id: string,
