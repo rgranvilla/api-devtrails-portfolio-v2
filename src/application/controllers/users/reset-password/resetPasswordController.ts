@@ -1,8 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { TokenExpiredError } from '@errors/users/tokenExpiredError';
-import { TokenInvalidError } from '@errors/users/tokenInvalidError';
+import { throwError } from '@core/errors/throwError';
 
 import { buildResetPasswordUseCaseFactory } from '@repositories/users/prisma/factories/buildResetPasswordUseCaseFactory';
 
@@ -31,10 +30,8 @@ export async function resetPasswordController(
 
     return reply.status(200).send({ user });
   } catch (err) {
-    if (err instanceof TokenInvalidError || err instanceof TokenExpiredError) {
-      return reply.status(409).send({ message: err.message });
-    }
-
-    throw err;
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

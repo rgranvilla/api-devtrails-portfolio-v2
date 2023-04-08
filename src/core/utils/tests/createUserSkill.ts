@@ -8,10 +8,12 @@ type Override = Partial<UserSkill>;
 export async function createUserSkill(
   app: FastifyInstance,
   user_id: string,
+  token: string,
   override?: Override,
 ) {
   const response = await request(app.server)
     .post(`/${user_id}/skills/create`)
+    .set('Authorization', `Bearer ${token}`)
     .send({
       name: override?.name ?? 'skill_name',
       proficiency: override?.proficiency ?? 5,

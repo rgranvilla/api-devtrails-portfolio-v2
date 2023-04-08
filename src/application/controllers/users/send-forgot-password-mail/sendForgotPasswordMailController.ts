@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { throwError } from '@core/errors/throwError';
 
 import { buildSendForgotPasswordMailUseCaseFactory } from '@repositories/users/prisma/factories/buildSendForgotPasswordMailUseCaseFactory';
 
@@ -23,10 +23,8 @@ export async function sendForgotPasswordMailController(
 
     return reply.status(200).send({ token });
   } catch (err) {
-    if (err instanceof ResourceNotFoundError) {
-      return reply.status(409).send({ message: err.message });
-    }
-
-    throw err;
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

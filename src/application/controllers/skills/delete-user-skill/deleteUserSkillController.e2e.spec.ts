@@ -16,12 +16,13 @@ describe('Delete User Skill (e2e)', () => {
 
   let userData: {
     id: string;
+    token: string;
   };
 
   beforeAll(async () => {
     await app.ready();
     userData = await createAndAuthenticateUser(app);
-    userSkillData = await createUserSkill(app, userData.id);
+    userSkillData = await createUserSkill(app, userData.id, userData.token);
   });
 
   afterAll(async () => {
@@ -29,10 +30,11 @@ describe('Delete User Skill (e2e)', () => {
   });
 
   it('should be able to delete an user skill', async () => {
-    const { userSkill, userId } = userSkillData;
+    const { userSkill } = userSkillData;
 
     const result = await request(app.server)
-      .delete(`/${userId}/skills/${userSkill.id}/delete`)
+      .delete(`/${userData.id}/skills/${userSkill.id}/delete`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send();
 
     expect(result.status).toBe(200);
@@ -46,6 +48,7 @@ describe('Delete User Skill (e2e)', () => {
     const wrongUserSkillId = '123e4567-e89b-12d3-a456-426614174000';
     const result = await request(app.server)
       .delete(`/${userId}/skills/${wrongUserSkillId}/delete`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send();
     const { message } = result.body;
     expect(result.status).toBe(404);
@@ -59,6 +62,7 @@ describe('Delete User Skill (e2e)', () => {
     const wrongUserId = '123e4567-e89b-12d3-a456-426614174000';
     const result = await request(app.server)
       .delete(`/${wrongUserId}/skills/${userSkill.id}/delete`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send();
     const { message } = result.body;
     expect(result.status).toBe(404);

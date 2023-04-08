@@ -11,15 +11,14 @@ describe('Create User Skill (e2e)', () => {
     proficiency: 5,
   };
 
-  let user: {
+  let userData: {
     token: string;
-    refreshToken: string;
     id: string;
   };
 
   beforeAll(async () => {
     await app.ready();
-    user = await createAndAuthenticateUser(app);
+    userData = await createAndAuthenticateUser(app);
   });
 
   afterAll(async () => {
@@ -28,7 +27,8 @@ describe('Create User Skill (e2e)', () => {
 
   it('should be able to create an user', async () => {
     const result = await request(app.server)
-      .post(`/${user.id}/skills/create`)
+      .post(`/${userData.id}/skills/create`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send({ ...userSkill });
 
     expect(result.statusCode).toEqual(201);
@@ -42,11 +42,13 @@ describe('Create User Skill (e2e)', () => {
 
   it('should throw error if skill already exists', async () => {
     await request(app.server)
-      .post(`/${user.id}/skills/create`)
+      .post(`/${userData.id}/skills/create`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send({ ...userSkill });
 
     const result = await request(app.server)
-      .post(`/${user.id}/skills/create`)
+      .post(`/${userData.id}/skills/create`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send({ ...userSkill });
 
     const { message } = result.body;

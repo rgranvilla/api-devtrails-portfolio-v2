@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { UserAlreadyExistsError } from '@errors/users/userAlreadyExistsError';
+import { throwError } from '@core/errors/throwError';
 
 import { UserMapper } from '@mappers/users/userMapper';
 
@@ -33,11 +33,9 @@ export async function createUserController(
     return reply.status(201).send({
       ...response,
     });
-  } catch (error) {
-    if (error instanceof UserAlreadyExistsError) {
-      return reply.status(409).send({ message: error.message });
-    }
-
-    throw error;
+  } catch (err) {
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

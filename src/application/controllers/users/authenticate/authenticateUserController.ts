@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { InvalidCredentialsError } from '@errors/users/invalidCredentialsError';
+import { throwError } from '@core/errors/throwError';
 
 import { buildAuthenticateUserUseCaseFactory } from '@repositories/users/prisma/factories/buildAuthenticateUserUseCaseFactory';
 
@@ -54,11 +54,9 @@ export async function authenticateUserController(
       .send({
         token,
       });
-  } catch (error) {
-    if (error instanceof InvalidCredentialsError) {
-      return reply.status(400).send({ message: error.message });
-    }
-
-    throw error;
+  } catch (err) {
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

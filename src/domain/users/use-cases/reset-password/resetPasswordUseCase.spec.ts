@@ -1,9 +1,10 @@
 import { compare } from 'bcryptjs';
 import { randomUUID } from 'node:crypto';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { IDateProvider } from '@core/providers/date-provider/IDateProvider';
 
+import { TokenExpiredError } from '@errors/users/tokenExpiredError';
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 
 import { DateProvider } from '@providers/date-provider';
@@ -28,6 +29,8 @@ describe('Reset Password', () => {
       userTokensRepository,
       dateProvider,
     );
+
+    vi.useFakeTimers();
   });
 
   it('should be able to reset password', async () => {
@@ -56,5 +59,29 @@ describe('Reset Password', () => {
     );
 
     expect(passwordUpdatedMatched).toBeTruthy();
+  });
+
+  it('should not be able to reset password if token was expired', async () => {
+    vi.setSystemTime(new Date(2022, 0, 20, 8, 0, 0));
+    const newUser = await createNewUserFactory();
+    await usersRepository.create(newUser);
+
+    const expires_date = dateProvider.addMinutes(15);
+    const token = randomUUID();
+
+    await userTokensRepository.create({
+      refresh_token: token,
+      user_id: newUser.id,
+      expires_date,
+    });
+
+    vi.setSystemTime(new Date(2022, 0, 20, 8, 15, 1));
+
+    await expect(() =>
+      sut.execute({
+        token,
+        password: '87654321',
+      }),
+    ).rejects.toBeInstanceOf(TokenExpiredError);
   });
 });

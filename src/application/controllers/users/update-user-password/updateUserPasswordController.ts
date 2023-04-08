@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { throwError } from '@core/errors/throwError';
 
 import { UserMapper } from '@mappers/users/userMapper';
 
@@ -38,10 +38,8 @@ export async function updateUserPasswordController(
       newPassword,
     });
   } catch (err) {
-    if (err instanceof ResourceNotFoundError) {
-      return reply.status(409).send({ message: err.message });
-    }
-
-    throw err;
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

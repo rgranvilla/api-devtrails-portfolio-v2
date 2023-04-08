@@ -18,17 +18,17 @@ describe('Update User Skill (e2e)', () => {
 
   let userSkillData: {
     userSkill: UserSkill;
-    userId: string;
   };
 
   let userData: {
     id: string;
+    token: string;
   };
 
   beforeAll(async () => {
     await app.ready();
     userData = await createAndAuthenticateUser(app);
-    userSkillData = await createUserSkill(app, userData.id);
+    userSkillData = await createUserSkill(app, userData.id, userData.token);
   });
 
   afterAll(async () => {
@@ -36,10 +36,11 @@ describe('Update User Skill (e2e)', () => {
   });
 
   it('should be able to update an user skill', async () => {
-    const { userSkill, userId } = userSkillData;
+    const { userSkill } = userSkillData;
 
     const result = await request(app.server)
-      .patch(`/${userId}/skills/${userSkill.id}/update`)
+      .patch(`/${userData.id}/skills/${userSkill.id}/update`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send({ ...dataToUpdate });
 
     expect(result.statusCode).toEqual(201);
@@ -54,11 +55,11 @@ describe('Update User Skill (e2e)', () => {
   });
 
   it('should throw error if user skill id doesnt exists', async () => {
-    const { userId } = userSkillData;
     const wrongUserSkillId = '123e4567-e89b-12d3-a456-426614174000';
 
     const result = await request(app.server)
-      .patch(`/${userId}/skills/${wrongUserSkillId}/update`)
+      .patch(`/${userData.id}/skills/${wrongUserSkillId}/update`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send({ ...dataToUpdate });
 
     const { message } = result.body;
@@ -70,11 +71,12 @@ describe('Update User Skill (e2e)', () => {
   });
 
   it('should throw error if user id doesnt exists', async () => {
-    const { userSkill, userId } = userSkillData;
+    const { userSkill } = userSkillData;
     const wrongUserId = '123e4567-e89b-12d3-a456-426614174000';
 
     const result = await request(app.server)
       .patch(`/${wrongUserId}/skills/${userSkill.id}/update`)
+      .set('Authorization', `Bearer ${userData.token}`)
       .send({ ...dataToUpdate });
 
     const { message } = result.body;

@@ -1,8 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithThisIdNotFoundError';
-import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
+import { throwError } from '@core/errors/throwError';
 
 import { UserSkillMapper } from '@mappers/skills/userSkillMapper';
 
@@ -44,15 +43,9 @@ export async function updateUserSkillController(
     return reply.status(201).send({
       ...response,
     });
-  } catch (error) {
-    if (error instanceof UserSkillWithThisIdNotFoundError) {
-      return reply.status(404).send({ message: error.message });
-    }
-
-    if (error instanceof UserWithThisIdNotFoundError) {
-      return reply.status(404).send({ message: error.message });
-    }
-
-    throw error;
+  } catch (err) {
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

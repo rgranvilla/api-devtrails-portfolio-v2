@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { UserSkillAlreadyExistsError } from '@errors/skills/userSkillAlreadyExistsError';
+import { throwError } from '@core/errors/throwError';
 
 import { UserSkillMapper } from '@mappers/skills/userSkillMapper';
 
@@ -43,11 +43,9 @@ export async function createUserSkillController(
     return reply.status(201).send({
       ...response,
     });
-  } catch (error) {
-    if (error instanceof UserSkillAlreadyExistsError) {
-      return reply.status(409).send({ message: error.message });
-    }
-
-    throw error;
+  } catch (err) {
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

@@ -38,21 +38,9 @@ export class SendForgotPasswordMailUseCase {
       'forgotPassword.hbs',
     );
 
-    if (!user) {
-      throw new ResourceNotFoundError();
-    }
-
     const token = randomUUID();
 
     const expires_date = this.dateProvider.addMinutes(15);
-
-    const oldTokens = await this.userTokensRepository.findByUserId(user.id);
-
-    if (oldTokens) {
-      for (const token of oldTokens) {
-        this.userTokensRepository.deleteById(token.id);
-      }
-    }
 
     await this.userTokensRepository.create({
       refresh_token: token,

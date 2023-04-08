@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { z } from 'zod';
 
-import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
+import { throwError } from '@core/errors/throwError';
 
 import { buildGetUserProfileUseCaseFactory } from '@repositories/users/prisma/factories/buildGetProfileUseCaseFactory';
 
@@ -28,11 +28,9 @@ export async function getUserProfileController(
         password: undefined,
       },
     });
-  } catch (error) {
-    if (error instanceof UserWithThisIdNotFoundError) {
-      reply.status(404).send({ message: error.message });
-    }
-
-    throw error;
+  } catch (err) {
+    throwError(err, (status, message) => {
+      return reply.status(status).send({ message });
+    });
   }
 }

@@ -1,5 +1,11 @@
 # api-devtrails-portfolio-v2
 
+## 0.3.1
+
+### Patch Changes
+
+- create add, delete, get, update users skills with tests
+
 ## 0.3.0
 
 ### Minor Changes

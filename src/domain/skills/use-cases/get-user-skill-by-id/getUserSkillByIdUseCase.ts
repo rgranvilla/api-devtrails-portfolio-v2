@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 interface IResponse {
-  userSkill: UserSkill | null;
+  userSkill: UserSkill;
 }
 
 export class GetUserSkillByIdUseCase {

@@ -9,15 +9,19 @@ export function errorHandler(
   reply: FastifyReply,
 ) {
   if (error instanceof ZodError) {
-    return reply
-      .status(400)
-      .send({ message: 'Validation error.', issues: error.format() });
+    const err = {
+      message: 'Validation error.',
+      issues: error.errors.map((error) => ({
+        field: error.path.join('.'),
+        message: error.message,
+      })),
+    };
+
+    return reply.status(400).send(err);
   }
 
   if (env.NODE_ENV !== 'production') {
     console.error(error);
-  } else {
-    //TODO: Here we should log to a external tool like DataDog/NewRelic/Sentry
   }
 
   return reply.status(500).send({ message: 'Internal server error.' });
