@@ -4,6 +4,10 @@ _Development of an API for the Devtrails Portfolio V2._
 
 A Node.js server that acts as api for Devtrails Portfolio. This project uses fastify as the server framework, zod for input validation, dotenv for managing environment variables, and is written in TypeScript.
 
+## Trello Board
+
+To check out the Trello board for this project, please visit: https://trello.com/b/5u0EiY4h/devtrails-portfolio
+
 ## Installation
 
 1. Clone the repository: `git clone git@github.com:rgranvilla/api-devtrails-portfolio-v2.git`
