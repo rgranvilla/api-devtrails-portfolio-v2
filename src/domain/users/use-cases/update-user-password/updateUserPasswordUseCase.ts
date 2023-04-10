@@ -1,42 +1,46 @@
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { compare } from 'bcryptjs';
+import { validateUser } from 'src/application/validators/users/validateUser';
+
 import { passwordHashing } from '@core/utils/passwordHashing';
+
+import { InvalidCredentialsError } from '@errors/users/invalidCredentialsError';
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 
 import { User } from '@domain/users/entities/user';
 
-interface IUpdatePasswordUserUseCaseRequest {
-  userId: string;
+interface IRequest {
+  user_id: string;
   data: {
-    password: string;
+    new_password: string;
+    old_password: string;
   };
 }
 
-interface IUpdatePasswordUserUseCaseResponse {
+interface IResponse {
   user: User;
-  newPassword: string;
+  password: string;
 }
 
 export class UpdatePasswordUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
-  async execute({
-    userId,
-    data,
-  }: IUpdatePasswordUserUseCaseRequest): Promise<IUpdatePasswordUserUseCaseResponse> {
-    const user = await this.usersRepository.findById(userId);
+  async execute({ user_id, data }: IRequest): Promise<IResponse> {
+    const existingUser = await validateUser(user_id, this.usersRepository);
 
-    if (!user) {
-      throw new ResourceNotFoundError();
+    const canUpdate = await compare(data.old_password, existingUser.password);
+
+    if (!canUpdate) {
+      throw new InvalidCredentialsError();
     }
 
-    user.password = await passwordHashing(data.password);
+    existingUser.password = await passwordHashing(data.new_password);
 
-    const updatedUser = await this.usersRepository.save(user);
+    const userData = await this.usersRepository.save(existingUser);
 
     return {
-      user: updatedUser,
-      newPassword: updatedUser.password,
+      user: userData,
+      password: userData.password,
     };
   }
 }

@@ -11,11 +11,11 @@ export async function updateUserController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const updateUserParamsSchema = z.object({
-    userId: z.string().uuid(),
+  const updateUserUserSchema = z.object({
+    sub: z.string().uuid(),
   });
 
-  const { userId } = updateUserParamsSchema.parse(request.params);
+  const { sub: user_id } = updateUserUserSchema.parse(request.user);
 
   const updateUserBodySchema = z.object({
     name: z.string().optional(),
@@ -38,7 +38,7 @@ export async function updateUserController(
     const updateUserUseCase = buildUpdateUserUseCaseFactory();
 
     const { user } = await updateUserUseCase.execute({
-      userId,
+      user_id,
       data: toUpdate,
     });
 

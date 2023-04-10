@@ -11,26 +11,18 @@ import { updateUserController } from '@controllers/users/update-user/updateUserC
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post('/users/create', createUserController);
-  app.get(
-    '/users/:user_id/profile',
-    { onRequest: verifyJwt },
-    getUserProfileController,
-  );
+  app.get('/users/profile', { onRequest: verifyJwt }, getUserProfileController);
 
   app.patch(
-    '/users/:userId/update-password',
+    '/users/update-password',
     { onRequest: [verifyJwt] },
     updateUserPasswordController,
   );
 
-  app.patch(
-    '/users/:userId/update',
-    { onRequest: [verifyJwt] },
-    updateUserController,
-  );
+  app.patch('/users/update', { onRequest: [verifyJwt] }, updateUserController);
 
   app.patch(
-    '/users/:userId/update-role',
+    '/users/update-role',
     { onRequest: [verifyJwt, verifyUserRole('admin')] },
     updateUserRoleController,
   );

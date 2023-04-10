@@ -1,11 +1,11 @@
-import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
+import { validateUser } from 'src/application/validators/users/validateUser';
 
 import { IUsersRepository } from '@repositories/users/IUsersRepository';
 
 import { User } from '@domain/users/entities/user';
 
 interface IUpdateRoleUserUseCaseRequest {
-  userId: string;
+  user_id: string;
   data: {
     role: 'admin' | 'creator' | 'subscriber';
   };
@@ -19,18 +19,14 @@ export class UpdateRoleUserUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   async execute({
-    userId,
+    user_id,
     data,
   }: IUpdateRoleUserUseCaseRequest): Promise<IUpdateUsersUseCaseResponse> {
-    const user = await this.usersRepository.findById(userId);
+    const existingUser = await validateUser(user_id, this.usersRepository);
 
-    if (!user) {
-      throw new ResourceNotFoundError();
-    }
+    existingUser.role = data.role;
 
-    user.role = data.role;
-
-    const updatedUser = await this.usersRepository.save(user);
+    const updatedUser = await this.usersRepository.save(existingUser);
 
     return {
       user: updatedUser,

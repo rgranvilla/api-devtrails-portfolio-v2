@@ -26,7 +26,7 @@ describe('Update User Use Case', () => {
     );
 
     const { user } = await sut.execute({
-      userId: createdUser.id,
+      user_id: createdUser.id,
       data: {
         role: 'admin',
       },
@@ -38,7 +38,7 @@ describe('Update User Use Case', () => {
   it('should throw an error if resource not found', async () => {
     await expect(() =>
       sut.execute({
-        userId: '123e4567-e89b-12d3-a456-426614174000',
+        user_id: '123e4567-e89b-12d3-a456-426614174000',
         data: {
           role: 'admin',
         },

@@ -30,7 +30,7 @@ describe('Update Role of an User (e2e)', () => {
     const id = createdUser.body.id;
 
     const response = await request(app.server)
-      .patch(`/users/${id}/update-role`)
+      .patch(`/users/update-role`)
       .set('Authorization', `Bearer ${adminToken}`)
       .send({
         role: 'admin',
@@ -41,7 +41,7 @@ describe('Update Role of an User (e2e)', () => {
 
   it('should be able to logout if an user admin update yourself role', async () => {
     const response = await request(app.server)
-      .patch(`/users/${adminId}/update-role`)
+      .patch(`/users/update-role`)
       .set('Authorization', `Bearer ${adminToken}`)
       .send({
         role: 'subscriber',
@@ -50,19 +50,5 @@ describe('Update Role of an User (e2e)', () => {
     expect(response.body.message).toBe(
       'Your user has been logged out. You need to perform a new login to proceed.',
     );
-  });
-
-  it('should throw error if resource not found', async () => {
-    const inexistentUserId = '123e4567-e89b-12d3-a456-426614174000';
-
-    const response = await request(app.server)
-      .patch(`/users/${inexistentUserId}/update-role`)
-      .set('Authorization', `Bearer ${adminToken}`)
-      .send({
-        name: 'changed name',
-      });
-
-    expect(response.status).toBe(409);
-    expect(response.body.message).toBe('Resource not found.');
   });
 });

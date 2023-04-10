@@ -11,31 +11,35 @@ export async function updateUserPasswordController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const updateUserParamsSchema = z.object({
-    userId: z.string().uuid(),
+  const updateUserUserSchema = z.object({
+    sub: z.string().uuid(),
   });
 
-  const { userId } = updateUserParamsSchema.parse(request.params);
+  const { sub: user_id } = updateUserUserSchema.parse(request.user);
 
   const updateUserBodySchema = z.object({
-    password: z.string().min(8),
+    new_password: z.string().min(8),
+    old_password: z.string().min(8),
   });
 
-  const { password } = updateUserBodySchema.parse(request.body);
+  const { new_password, old_password } = updateUserBodySchema.parse(
+    request.body,
+  );
 
   try {
     const updateUserUseCase = buildUpdateUserPasswordUseCaseFactory();
 
-    const { user, newPassword } = await updateUserUseCase.execute({
-      userId,
+    const { user, password } = await updateUserUseCase.execute({
+      user_id,
       data: {
-        password,
+        new_password,
+        old_password,
       },
     });
 
     return reply.status(200).send({
       user: UserMapper.toHttp(user),
-      newPassword,
+      password,
     });
   } catch (err) {
     throwError(err, (status, message) => {

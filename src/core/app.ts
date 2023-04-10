@@ -1,10 +1,11 @@
 import fastify from 'fastify';
 
 import { errorHandler } from '@core/errors/errorHandler.js';
-import { registerMiddleware } from '@core/middlewares/registerMiddleware';
+
+import { registerMiddlewares } from './middlewares/register';
 
 export const app = fastify();
 
-registerMiddleware(app);
+registerMiddlewares(app);
 
 app.setErrorHandler(errorHandler);

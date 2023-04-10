@@ -30,26 +30,12 @@ describe('Update User (e2e)', () => {
     const id = createdUser.body.id;
 
     const response = await request(app.server)
-      .patch(`/users/${id}/update`)
+      .patch(`/users/update`)
       .set('Authorization', `Bearer ${adminToken}`)
       .send({
         job_title: 'Fullstack',
       });
 
     expect(response.body.user.job_title).toBe('Fullstack');
-  });
-
-  it('should throw error if resource not found', async () => {
-    const inexistentUserId = '123e4567-e89b-12d3-a456-426614174000';
-
-    const response = await request(app.server)
-      .patch(`/users/${inexistentUserId}/update`)
-      .set('Authorization', `Bearer ${adminToken}`)
-      .send({
-        name: 'changed name',
-      });
-
-    expect(response.status).toBe(409);
-    expect(response.body.message).toBe('Resource not found.');
   });
 });

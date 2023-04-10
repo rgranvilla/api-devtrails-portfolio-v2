@@ -9,11 +9,11 @@ export async function getUserProfileController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const getUserProfileParamsSchema = z.object({
-    user_id: z.string().uuid(),
+  const getUserProfileUserSchema = z.object({
+    sub: z.string().uuid(),
   });
 
-  const { user_id } = getUserProfileParamsSchema.parse(request.params);
+  const { sub: user_id } = getUserProfileUserSchema.parse(request.user);
 
   try {
     const getUserProfile = buildGetUserProfileUseCaseFactory();

@@ -11,11 +11,11 @@ export async function updateUserRoleController(
   request: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const updateUserParamsSchema = z.object({
-    userId: z.string().uuid(),
+  const updateUserUserSchema = z.object({
+    sub: z.string().uuid(),
   });
 
-  const { userId } = updateUserParamsSchema.parse(request.params);
+  const { sub: user_id } = updateUserUserSchema.parse(request.user);
 
   const updateUserBodySchema = z.object({
     role: z.enum(['admin', 'creator', 'subscriber']).optional(),
@@ -27,14 +27,14 @@ export async function updateUserRoleController(
     const updateUserUseCase = buildUpdateUserUseCaseFactory();
 
     const { user } = await updateUserUseCase.execute({
-      userId,
+      user_id,
       data: toUpdate,
     });
 
     const { role, sub } = request.user;
 
     const logoutIsNeeded =
-      role === 'admin' && userId === sub && toUpdate.role !== 'admin';
+      role === 'admin' && user_id === sub && toUpdate.role !== 'admin';
 
     if (logoutIsNeeded) {
       return reply

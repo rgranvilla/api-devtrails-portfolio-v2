@@ -31,30 +31,17 @@ describe('Update Password of an User (e2e)', () => {
     const id = createdUser.body.id;
 
     const response = await request(app.server)
-      .patch(`/users/${id}/update-password`)
+      .patch(`/users/update-password`)
       .set('Authorization', `Bearer ${adminToken}`)
       .send({
-        password: 'new-password',
+        new_password: 'new-password',
+        old_password: '12345678',
       });
 
-    const { newPassword } = response.body;
+    const { password } = response.body;
 
-    const passwordUpdatedMatched = await compare('new-password', newPassword);
+    const passwordUpdatedMatched = await compare('new-password', password);
 
     expect(passwordUpdatedMatched).toBeTruthy();
-  });
-
-  it('should be throw error with user doesnt exists', async () => {
-    const inexistentUserId = '123e4567-e89b-12d3-a456-426614174000';
-
-    const response = await request(app.server)
-      .patch(`/users/${inexistentUserId}/update-password`)
-      .set('Authorization', `Bearer ${adminToken}`)
-      .send({
-        password: 'new-password',
-      });
-
-    expect(response.status).toBe(409);
-    expect(response.body.message).toBe('Resource not found.');
   });
 });

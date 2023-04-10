@@ -9,7 +9,7 @@ import { appConfig } from '@config/app';
 
 import { appRoutes } from '@routes/index.js';
 
-export function registerMiddleware(app: FastifyInstance) {
+export function registerMiddlewares(app: FastifyInstance) {
   app.register(fastifyCors, appConfig.cors);
   app.register(fastifySwagger, appConfig.swagger.options);
   app.register(fastifySwaggerUi, appConfig.swagger.uiOptions);

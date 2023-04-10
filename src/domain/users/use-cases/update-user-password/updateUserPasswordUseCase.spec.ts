@@ -24,14 +24,15 @@ describe('Update User Use Case', () => {
       }),
     );
 
-    const { user, newPassword } = await sut.execute({
-      userId: createdUser.id,
+    const { password } = await sut.execute({
+      user_id: createdUser.id,
       data: {
-        password: 'new-password',
+        new_password: 'new-password',
+        old_password: '12345678',
       },
     });
 
-    const passwordUpdatedMatched = await compare('new-password', newPassword);
+    const passwordUpdatedMatched = await compare('new-password', password);
 
     expect(passwordUpdatedMatched).toBeTruthy();
   });
