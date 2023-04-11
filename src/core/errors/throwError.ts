@@ -1,4 +1,5 @@
 import { FastifyReply } from 'fastify';
+import { MulterError } from 'fastify-multer';
 
 import { UserSkillAlreadyExistsError } from '@errors/skills/userSkillAlreadyExistsError';
 import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithThisIdNotFoundError';
@@ -8,11 +9,12 @@ import { TokenInvalidError } from '@errors/users/tokenInvalidError';
 import { UserAlreadyExistsError } from '@errors/users/userAlreadyExistsError';
 import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
 
+import { InvalidAvatarFileTypeError } from './invalidAvatarFileTypeError';
 import { ResourceNotFoundError } from './resourceNotFoundError';
 
 export function throwError(
   err: unknown,
-  callback: (status: number, message: unknown) => FastifyReply,
+  callback: (status: number, message: unknown, field?: string) => FastifyReply,
 ) {
   if (err instanceof UserSkillAlreadyExistsError) {
     return callback(409, err.message);
@@ -44,6 +46,14 @@ export function throwError(
 
   if (err instanceof ResourceNotFoundError) {
     return callback(409, err.message);
+  }
+
+  if (err instanceof InvalidAvatarFileTypeError) {
+    return callback(400, err.message);
+  }
+
+  if (err instanceof MulterError) {
+    return callback(400, err.message);
   }
 
   throw err;

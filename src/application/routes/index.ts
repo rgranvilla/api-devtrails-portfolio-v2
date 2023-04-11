@@ -6,8 +6,9 @@ import { passwordRoutes } from './users/passwordRoutes';
 import { usersRoutes } from './users/usersRoutes';
 
 export async function appRoutes(app: FastifyInstance) {
-  app.register(usersRoutes);
-  app.register(authRoutes);
-  app.register(passwordRoutes);
-  app.register(skillsRoutes);
+  app
+    .register(usersRoutes)
+    .register(authRoutes)
+    .register(passwordRoutes)
+    .register(skillsRoutes);
 }

@@ -14,6 +14,7 @@ const envSchema = z.object({
   MAIL_PROVIDER: z.string(),
   FORGOT_MAIL_URL: z.string(),
   AWS_REGION: z.string(),
+  STORAGE_PROVIDER: z.string(),
 });
 
 const _env = envSchema.safeParse(process.env);

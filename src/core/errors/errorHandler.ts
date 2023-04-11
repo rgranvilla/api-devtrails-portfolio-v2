@@ -1,4 +1,5 @@
 import { FastifyError, FastifyReply, FastifyRequest } from 'fastify';
+import { MulterError } from 'fastify-multer';
 import { ZodError } from 'zod';
 
 import { env } from '@config/env';
@@ -15,6 +16,14 @@ export function errorHandler(
         field: error.path.join('.'),
         message: error.message,
       })),
+    };
+
+    return reply.status(400).send(err);
+  }
+
+  if (error instanceof MulterError) {
+    const err = {
+      message: 'Errrroooooouuuuuu!',
     };
 
     return reply.status(400).send(err);
