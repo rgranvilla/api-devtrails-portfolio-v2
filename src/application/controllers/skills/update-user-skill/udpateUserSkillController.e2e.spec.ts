@@ -69,19 +69,4 @@ describe('Update User Skill (e2e)', () => {
       `The user skill with id ${wrongUserSkillId} not found.`,
     );
   });
-
-  it('should throw error if user id doesnt exists', async () => {
-    const { userSkill } = userSkillData;
-    const wrongUserId = '123e4567-e89b-12d3-a456-426614174000';
-
-    const result = await request(app.server)
-      .patch(`/${wrongUserId}/skills/${userSkill.id}/update`)
-      .set('Authorization', `Bearer ${userData.token}`)
-      .send({ ...dataToUpdate });
-
-    const { message } = result.body;
-
-    expect(result.status).toBe(404);
-    expect(message).toBe(`The user with id ${wrongUserId} not found.`);
-  });
 });

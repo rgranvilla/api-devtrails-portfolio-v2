@@ -1,7 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 
 import { UserSkillWithThisIdNotFoundError } from '@errors/skills/userSkillWithThisIdNotFoundError';
-import { UserWithThisIdNotFoundError } from '@errors/users/userWithThisIdNotFoundError';
 import { createNewUserSkillFactory } from '@factories/skills/createNewUserSkillFactory';
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 
@@ -32,7 +31,7 @@ describe('CreateUserSkillUseCase', () => {
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
     userSkillsRepository = new InMemorySkillsRepository();
-    sut = new UpdateUserSkillUseCase(usersRepository, userSkillsRepository);
+    sut = new UpdateUserSkillUseCase(userSkillsRepository);
 
     user = await createNewUserFactory();
     await usersRepository.create(user);
@@ -76,15 +75,5 @@ describe('CreateUserSkillUseCase', () => {
         data: dataToUpdate,
       }),
     ).rejects.toBeInstanceOf(UserSkillWithThisIdNotFoundError);
-  });
-
-  it('should throw an error if user doesnt exists', async () => {
-    await expect(() =>
-      sut.execute({
-        skill_id: 'any_valid_skill_id',
-        user_id: 'inexistent_user_id',
-        data: dataToUpdate,
-      }),
-    ).rejects.toBeInstanceOf(UserWithThisIdNotFoundError);
   });
 });

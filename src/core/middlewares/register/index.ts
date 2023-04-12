@@ -7,14 +7,16 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import { FastifyInstance } from 'fastify';
 
 import { auth } from '@config/auth';
-import { upload } from '@config/upload/avatar';
+import { uploadAvatarConfig } from '@config/upload/avatar';
+import { uploadSkillIconConfig } from '@config/upload/skillIcon';
 
 import { appRoutes } from '@routes/index.js';
 
 import packageJson from '../../../../package.json';
 
 const { secret_token, expires_in_token } = auth;
-export const uploadAvatar = upload.single('avatar');
+export const uploadAvatar = uploadAvatarConfig.single('avatar');
+export const uploadSkillIcon = uploadSkillIconConfig.single('skill_icon');
 
 export function registerMiddlewares(app: FastifyInstance) {
   app.register(fastifyCors, {

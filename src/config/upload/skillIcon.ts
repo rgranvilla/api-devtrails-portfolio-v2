@@ -10,8 +10,9 @@ const _tmpFolder = resolve(__dirname, '..', '..', '..', 'tmp', 'uploads');
 const storage = multer.diskStorage({
   destination: async (req: FastifyRequest, file, cb) => {
     const { sub: user_id } = req.user;
+    const { skill_id } = req.params as { skill_id: string };
 
-    const userFolder = path.join(_tmpFolder, user_id, 'avatar');
+    const userFolder = path.join(_tmpFolder, user_id, 'skills', skill_id);
 
     try {
       const exists = await fs
@@ -31,7 +32,9 @@ const storage = multer.diskStorage({
     cb(null, userFolder);
   },
   filename: (req: FastifyRequest, file, cb) => {
-    const fileName = `avatar.${file.mimetype.split('/')[1]}`;
+    const { skill_id } = req.params as { skill_id: string };
+
+    const fileName = `${skill_id}.${file.mimetype.split('/')[1]}`;
 
     cb(null, fileName);
   },
@@ -51,7 +54,7 @@ const fileFilter = (req: FastifyRequest, file: any, cb: any | Error) => {
 };
 
 const limits = {
-  fileSize: 600 * 1024, // maximum file size (600 Kb)
+  fileSize: 150 * 1024, // maximum file size (150 Kb)
 };
 
-export const uploadAvatarConfig = multer({ storage, fileFilter, limits });
+export const uploadSkillIconConfig = multer({ storage, fileFilter, limits });

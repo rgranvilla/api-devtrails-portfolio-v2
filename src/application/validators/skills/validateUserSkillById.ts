@@ -7,9 +7,9 @@ export async function validateUserSkillById(
   userSkillsRepository: IUserSkillsRepository,
 ) {
   const existingUserSkill = await userSkillsRepository.findBySkillId(skill_id);
+
   if (!existingUserSkill) {
     throw new UserSkillWithThisIdNotFoundError(skill_id);
   }
-
   return existingUserSkill;
 }

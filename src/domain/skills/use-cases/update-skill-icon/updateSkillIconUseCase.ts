@@ -1,29 +1,23 @@
 import { validateUserSkillById } from 'src/application/validators/skills/validateUserSkillById';
 
-import { IUpdateUserSkillDto } from '@dtos/skills/IUpdateUserSkillDto';
-
 import { IUserSkillsRepository } from '@repositories/skills/IUserSkillsRepository';
 
 import { UserSkill } from '@domain/skills/entities/userSkill';
 
-interface IUpdateUserSkillUseCaseRequest {
+interface IRequest {
   skill_id: string;
   user_id: string;
-  data: Partial<IUpdateUserSkillDto>;
+  path: string;
 }
 
-interface IUpdateUserSkillUseCaseResponse {
+interface IResponse {
   userSkill: UserSkill;
 }
 
-export class UpdateUserSkillUseCase {
+export class UpdateSkillIconUseCase {
   constructor(private userSkillsRepository: IUserSkillsRepository) {}
 
-  async execute({
-    skill_id,
-    user_id,
-    data,
-  }: IUpdateUserSkillUseCaseRequest): Promise<IUpdateUserSkillUseCaseResponse> {
+  async execute({ skill_id, user_id, path }: IRequest): Promise<IResponse> {
     const existingUserSkill = await validateUserSkillById(
       skill_id,
       this.userSkillsRepository,
@@ -32,10 +26,10 @@ export class UpdateUserSkillUseCase {
     const userSkillToUpdate = new UserSkill(
       {
         user_id,
-        name: data.name ?? existingUserSkill.name,
-        description: data.description ?? existingUserSkill.description,
-        proficiency: data.proficiency ?? existingUserSkill.proficiency,
-        skill_icon_url: data.skill_icon_url ?? existingUserSkill.skill_icon_url,
+        name: existingUserSkill.name,
+        description: existingUserSkill.description,
+        proficiency: existingUserSkill.proficiency,
+        skill_icon_url: path,
       },
       skill_id,
     );
