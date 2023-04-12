@@ -37,6 +37,7 @@ model User {
   updated_at        DateTime     @updatedAt
   UsersToken        UsersToken[]
   UsersSkill        UsersSkill[]
+  Course            Course[]
 
   @@map("users")
 }
@@ -66,4 +67,29 @@ model UsersSkill {
   user_id String
 
   @@map("users_skills")
+}
+
+model Course {
+  id              Int       @id @default(autoincrement())
+  name            String
+  description     String?
+  course_url      String?
+  date_start      DateTime
+  date_end        DateTime?
+  duration        Int?
+  institution     String?
+  institution_url String?
+  location        String?
+  certificate     Boolean
+  notes           String?
+  cover_image     String? // path or URL to the cover image
+  thumbnail       String? // path or URL to the thumbnail image
+  course_area     String? // the course area (e.g. backend, frontend, etc.)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+
+  User    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("courses")
 }
