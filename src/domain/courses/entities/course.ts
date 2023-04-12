@@ -61,6 +61,10 @@ export class Course {
     return this._id;
   }
 
+  public get user_id(): string {
+    return this._id;
+  }
+
   public set name(name: string) {
     this.props.name = name;
   }
