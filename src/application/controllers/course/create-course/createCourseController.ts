@@ -13,13 +13,16 @@ export async function createCourseController(
 ) {
   const createCourseBodySchema = z.object({
     name: z.string(),
-    user_id: z.string(),
-    date_start: z.date(),
+    date_start: z.string(),
   });
 
-  const { name, date_start, user_id } = createCourseBodySchema.parse(
-    request.body,
-  );
+  const createCourseUserSchema = z.object({
+    sub: z.string().uuid(),
+  });
+
+  const { name, date_start } = createCourseBodySchema.parse(request.body);
+
+  const { sub: user_id } = createCourseUserSchema.parse(request.user);
 
   try {
     const createCourseUseCase = buildCreateCourseUseCaseFactory();
@@ -27,7 +30,7 @@ export async function createCourseController(
     const { course } = await createCourseUseCase.execute({
       user_id,
       name,
-      date_start,
+      date_start: new Date(date_start),
     });
 
     const response = CourseMapper.toHttp(course);

@@ -16,7 +16,7 @@ interface ICourseProps {
   certificate: boolean;
   notes?: string | null;
   cover_image?: string | null;
-  thumbsnail?: string | null;
+  thumbnail?: string | null;
   course_area?: string | null;
   created_at: Date;
   updated_at: Date;
@@ -50,7 +50,7 @@ export class Course {
       certificate: props.certificate ?? false,
       notes: props.notes ?? null,
       cover_image: props.cover_image ?? null,
-      thumbsnail: props.thumbsnail ?? null,
+      thumbnail: props.thumbnail ?? null,
       course_area: props.course_area ?? null,
       created_at: props.created_at ?? new Date(),
       updated_at: props.updated_at ?? new Date(),
@@ -62,7 +62,7 @@ export class Course {
   }
 
   public get user_id(): string {
-    return this._id;
+    return this.props.user_id;
   }
 
   public set name(name: string) {
@@ -161,12 +161,12 @@ export class Course {
     return this.props.cover_image;
   }
 
-  public set thumbsnail(thumbsnail: string | null | undefined) {
-    this.props.thumbsnail = thumbsnail;
+  public set thumbnail(thumbnail: string | null | undefined) {
+    this.props.thumbnail = thumbnail;
   }
 
-  public get thumbsnail(): string | null | undefined {
-    return this.props.thumbsnail;
+  public get thumbnail(): string | null | undefined {
+    return this.props.thumbnail;
   }
 
   public set course_area(course_area: string | null | undefined) {

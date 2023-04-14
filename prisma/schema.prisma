@@ -70,7 +70,7 @@ model UsersSkill {
 }
 
 model Course {
-  id              Int       @id @default(autoincrement())
+  id              String    @id @default(uuid())
   name            String
   description     String?
   course_url      String?

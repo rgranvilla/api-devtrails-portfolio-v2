@@ -15,7 +15,7 @@ export interface ICourseProps {
   certificate: boolean;
   notes?: string | null;
   cover_image?: string | null;
-  thumbsnail?: string | null;
+  thumbnail?: string | null;
   course_area?: string | null;
   created_at: Date;
   updated_at: Date;
@@ -38,7 +38,7 @@ export class CourseMapper {
       certificate: course.certificate,
       notes: course.notes,
       cover_image: course.cover_image,
-      thumbsnail: course.thumbsnail,
+      thumbnail: course.thumbnail,
       course_area: course.course_area,
       created_at: course.created_at,
       updated_at: course.updated_at,
@@ -61,7 +61,7 @@ export class CourseMapper {
       certificate: course.certificate,
       notes: course.notes,
       cover_image: course.cover_image,
-      thumbsnail: course.thumbsnail,
+      thumbnail: course.thumbnail,
       course_area: course.course_area,
       created_at: course.created_at,
       updated_at: course.updated_at,
@@ -84,7 +84,7 @@ export class CourseMapper {
         certificate: raw.certificate,
         notes: raw.notes,
         cover_image: raw.cover_image,
-        thumbsnail: raw.thumbsnail,
+        thumbnail: raw.thumbnail,
         course_area: raw.course_area,
         created_at: raw.created_at,
         updated_at: raw.updated_at,

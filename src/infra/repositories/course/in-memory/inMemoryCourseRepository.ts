@@ -5,12 +5,16 @@ import { Course } from '@domain/courses/entities/course';
 import { ICourseRepository } from '../ICourseRepository';
 
 export class InMemoryCourseRepository implements ICourseRepository {
+  public items: ICourseProps[] = [];
+
   findById(id: string): Promise<Course | null> {
     throw new Error('Method not implemented.');
   }
 
-  async findByName(name: string): Promise<Course | null> {
-    const existingCourse = this.items.find((item) => item.name === name);
+  async findByName(user_id: string, name: string): Promise<Course | null> {
+    const existingCourse = this.items.find(
+      (item) => item.name === name && item.user_id === user_id,
+    );
 
     if (!existingCourse) {
       return null;
@@ -33,5 +37,4 @@ export class InMemoryCourseRepository implements ICourseRepository {
   async create(course: Course): Promise<void> {
     this.items.push(CourseMapper.toDatabase(course));
   }
-  public items: ICourseProps[] = [];
 }

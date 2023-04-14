@@ -19,7 +19,7 @@ describe('User Entity', () => {
       certificate,
       notes,
       cover_image,
-      thumbsnail,
+      thumbnail,
       course_area,
       created_at,
       updated_at,
@@ -43,7 +43,7 @@ describe('User Entity', () => {
     expect(certificate).toBe(false);
     expect(notes).toBeNull();
     expect(cover_image).toBeNull();
-    expect(thumbsnail).toBeNull();
+    expect(thumbnail).toBeNull();
     expect(course_area).toBeNull();
     expect(created_at).toEqual(expect.any(Date));
     expect(updated_at).toEqual(expect.any(Date));
@@ -71,7 +71,7 @@ describe('User Entity', () => {
     course.certificate = true;
     course.notes = 'notes...';
     course.cover_image = 'http://cover-image...';
-    course.thumbsnail = 'http://thumbsnail...';
+    course.thumbnail = 'http://thumbnail...';
     course.course_area = 'advanced';
 
     expect(course.name).toBe('Typescript');
@@ -85,7 +85,7 @@ describe('User Entity', () => {
     expect(course.certificate).toBeTruthy();
     expect(course.notes).toBe('notes...');
     expect(course.cover_image).toBe('http://cover-image...');
-    expect(course.thumbsnail).toBe('http://thumbsnail...');
+    expect(course.thumbnail).toBe('http://thumbnail...');
     expect(course.course_area).toBe('advanced');
     expect(course.created_at).toEqual(expect.any(Date));
     expect(course.updated_at).toEqual(expect.any(Date));

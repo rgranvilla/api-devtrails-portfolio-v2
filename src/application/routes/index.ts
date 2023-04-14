@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 
+import { courseRoutes } from './courses/coursesRoutes';
 import { skillsRoutes } from './skills/skillsRoutes';
 import { authRoutes } from './users/authRoutes';
 import { passwordRoutes } from './users/passwordRoutes';
@@ -10,5 +11,6 @@ export async function appRoutes(app: FastifyInstance) {
     .register(usersRoutes)
     .register(authRoutes)
     .register(passwordRoutes)
-    .register(skillsRoutes);
+    .register(skillsRoutes)
+    .register(courseRoutes);
 }
