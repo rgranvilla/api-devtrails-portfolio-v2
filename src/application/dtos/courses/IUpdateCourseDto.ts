@@ -1,6 +1,5 @@
 export interface IUpdateCourseDTO {
-  user_id: string;
-  name: string;
+  name?: string;
   description?: string | null;
   course_url?: string | null;
   date_start: Date;
@@ -9,7 +8,7 @@ export interface IUpdateCourseDTO {
   institution?: string | null;
   institution_url?: string | null;
   location?: string | null;
-  certificate: boolean;
+  certificate?: boolean;
   notes?: string | null;
   cover_image?: string | null;
   thumbnail?: string | null;

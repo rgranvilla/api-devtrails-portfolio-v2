@@ -7,7 +7,6 @@ import { ICourseRepository } from '@repositories/course/ICourseRepository';
 import { Course } from '@domain/courses/entities/course';
 
 interface IRequest {
-  user_id: string;
   course_id: string;
   data: Partial<IUpdateCourseDTO>;
 }
@@ -19,7 +18,7 @@ interface IResponse {
 export class UpdateCourseUseCase {
   constructor(private courseRepository: ICourseRepository) {}
 
-  async execute({ user_id, course_id, data }: IRequest): Promise<IResponse> {
+  async execute({ course_id, data }: IRequest): Promise<IResponse> {
     const existingCourse = await validateCourse(
       course_id,
       this.courseRepository,
@@ -48,7 +47,10 @@ export class UpdateCourseUseCase {
       course_id,
     );
 
-    const updatedCourse = await this.courseRepository.save(courseToUpdate);
+    const updatedCourse = await this.courseRepository.save(
+      course_id,
+      courseToUpdate,
+    );
 
     return {
       course: updatedCourse,

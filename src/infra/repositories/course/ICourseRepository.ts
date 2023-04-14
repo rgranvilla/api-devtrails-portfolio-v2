@@ -5,6 +5,6 @@ export abstract class ICourseRepository {
   abstract findByName(user_id: string, name: string): Promise<Course | null>;
   abstract listAll(): Promise<Course[] | null>;
   abstract delete(id: string): Promise<void>;
-  abstract save(course: Course): Promise<Course>;
+  abstract save(course_id: string, data: Course): Promise<Course>;
   abstract create(course: Course): Promise<void>;
 }

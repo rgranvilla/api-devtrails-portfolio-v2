@@ -57,7 +57,7 @@ describe('CreateUserSkillUseCase', () => {
       data: dataToUpdate,
     });
 
-    expect(result.userSkill.id).toEqual(expect.any(String));
+    expect(result.userSkill.id).toBe(userSkill.id);
     expect(result.userSkill.created_at).toEqual(expect.any(Date));
     expect(result.userSkill.updated_at).toEqual(expect.any(Date));
     expect(result.userSkill.user_id).toBe(userSkill.user_id);

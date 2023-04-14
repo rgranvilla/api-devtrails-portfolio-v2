@@ -25,8 +25,6 @@ describe('Create Course (e2e)', () => {
         date_start: new Date('June 15, 2022'),
       });
 
-    console.log(response.body);
-
     expect(response.statusCode).toEqual(201);
     expect(response.body).toEqual(
       expect.objectContaining({

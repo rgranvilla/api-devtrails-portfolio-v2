@@ -7,8 +7,14 @@ import { ICourseRepository } from '../ICourseRepository';
 export class InMemoryCourseRepository implements ICourseRepository {
   public items: ICourseProps[] = [];
 
-  findById(id: string): Promise<Course | null> {
-    throw new Error('Method not implemented.');
+  async findById(course_id: string): Promise<Course | null> {
+    const existingCourse = this.items.find((item) => item.id === course_id);
+
+    if (!existingCourse) {
+      return null;
+    }
+
+    return CourseMapper.toDomain(existingCourse);
   }
 
   async findByName(user_id: string, name: string): Promise<Course | null> {
@@ -31,8 +37,19 @@ export class InMemoryCourseRepository implements ICourseRepository {
   delete(id: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  save(course: Course): Promise<Course> {
-    throw new Error('Method not implemented.');
+
+  async save(course_id: string, data: Course): Promise<Course> {
+    const userCourseIndex = this.items.findIndex(
+      (item) => item.id === course_id,
+    );
+
+    const userCourseToUpdate = CourseMapper.toDatabase(data);
+
+    this.items[userCourseIndex] = {
+      ...userCourseToUpdate,
+    };
+
+    return CourseMapper.toDomain(this.items[userCourseIndex]);
   }
   async create(course: Course): Promise<void> {
     this.items.push(CourseMapper.toDatabase(course));
