@@ -20,13 +20,13 @@ export class InMemoryUsersRepository implements IUsersRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = this.items.find((item) => item.email === email);
+    const existingUser = this.items.find((item) => item.email === email);
 
-    if (!user) {
+    if (!existingUser) {
       return null;
     }
 
-    const parsedUser = new User(user, user.id);
+    const parsedUser = UserMapper.toDomain(existingUser);
 
     return parsedUser;
   }
