@@ -45,6 +45,29 @@ export class CourseMapper {
     };
   }
 
+  static toHttp(course: Course) {
+    return {
+      id: course.id,
+      user_id: course.user_id,
+      name: course.name,
+      description: course.description,
+      course_url: course.course_url,
+      date_start: course.date_start,
+      date_end: course.date_end,
+      duration: course.duration,
+      institution: course.institution,
+      institution_url: course.institution_url,
+      location: course.location,
+      certificate: course.certificate,
+      notes: course.notes,
+      cover_image: course.cover_image,
+      thumbsnail: course.thumbsnail,
+      course_area: course.course_area,
+      created_at: course.created_at,
+      updated_at: course.updated_at,
+    };
+  }
+
   static toDomain(raw: ICourseProps) {
     return new Course(
       {
