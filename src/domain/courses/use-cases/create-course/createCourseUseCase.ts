@@ -1,8 +1,8 @@
 import { CourseAlreadyExistsError } from '@errors/courses/courseAlreadyExistsError';
 
-import { ICourseRepository } from '@repositories/course/ICourseRepository';
+import { IUserCoursesRepository } from '@repositories/courses/ICoursesRepository';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
 interface IRequest {
   user_id: string;
@@ -11,11 +11,11 @@ interface IRequest {
 }
 
 interface IResponse {
-  course: Course;
+  course: UserCourse;
 }
 
 export class CreateCourseUseCase {
-  constructor(private courseRepository: ICourseRepository) {}
+  constructor(private courseRepository: IUserCoursesRepository) {}
 
   async execute({ name, user_id, date_start }: IRequest): Promise<IResponse> {
     const courseWithSameName = await this.courseRepository.findByName(
@@ -27,7 +27,7 @@ export class CreateCourseUseCase {
       throw new CourseAlreadyExistsError();
     }
 
-    const createdCourse = new Course({
+    const createdCourse = new UserCourse({
       name,
       user_id,
       date_start,

@@ -1,9 +1,9 @@
 import { FastifyInstance } from 'fastify';
 import request from 'supertest';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
-type Override = Partial<Course>;
+type Override = Partial<UserCourse>;
 
 export async function createUserCourse(
   app: FastifyInstance,

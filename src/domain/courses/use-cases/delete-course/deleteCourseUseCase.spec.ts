@@ -3,24 +3,24 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { createNewUserCourseFactory } from '@factories/courses/createNewUserCourseFactory';
 import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 
-import { InMemoryCourseRepository } from '@repositories/course/in-memory/inMemoryCourseRepository';
+import { InMemoryCoursesRepository } from '@repositories/courses/in-memory/inMemoryCoursesRepository';
 import { InMemoryUsersRepository } from '@repositories/users/in-memory/inMemoryUsersRepository';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 import { User } from '@domain/users/entities/user';
 
 import { DeleteCourseUseCase } from './deleteCourseUseCase';
 
 let usersRepository: InMemoryUsersRepository;
-let courseRepository: InMemoryCourseRepository;
+let courseRepository: InMemoryCoursesRepository;
 let sut: DeleteCourseUseCase;
 let user: User;
-let userCourse: Course;
+let userCourse: UserCourse;
 
-describe('Delete Course Use Case', () => {
+describe('Delete UserCourse Use Case', () => {
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
-    courseRepository = new InMemoryCourseRepository();
+    courseRepository = new InMemoryCoursesRepository();
     sut = new DeleteCourseUseCase(courseRepository);
 
     user = await createNewUserFactory();

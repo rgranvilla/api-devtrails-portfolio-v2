@@ -1,6 +1,6 @@
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
-export interface ICourseProps {
+export interface IUserCourseProps {
   id: string;
   user_id: string;
   name: string;
@@ -22,7 +22,7 @@ export interface ICourseProps {
 }
 
 export class CourseMapper {
-  static toDatabase(course: Course) {
+  static toDatabase(course: UserCourse) {
     return {
       id: course.id,
       user_id: course.user_id,
@@ -45,7 +45,7 @@ export class CourseMapper {
     };
   }
 
-  static toHttp(course: Course) {
+  static toHttp(course: UserCourse) {
     return {
       id: course.id,
       user_id: course.user_id,
@@ -68,8 +68,8 @@ export class CourseMapper {
     };
   }
 
-  static toDomain(raw: ICourseProps) {
-    return new Course(
+  static toDomain(raw: IUserCourseProps) {
+    return new UserCourse(
       {
         user_id: raw.user_id,
         name: raw.name,

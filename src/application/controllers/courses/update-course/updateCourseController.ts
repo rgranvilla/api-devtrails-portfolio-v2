@@ -5,7 +5,7 @@ import { throwError } from '@core/errors/throwError';
 
 import { CourseMapper } from '@mappers/course/courseMapper';
 
-import { buildUpdateCourseUseCaseFactory } from '@repositories/course/prisma/factory/buildUpdateCourseUseCaseFactory';
+import { buildUpdateCourseUseCaseFactory } from '@repositories/courses/prisma/factory/buildUpdateCourseUseCaseFactory';
 
 export async function updateCourseController(
   request: FastifyRequest,

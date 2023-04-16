@@ -1,10 +1,10 @@
 import { ResourceNotFoundError } from '@core/errors/resourceNotFoundError';
 
-import { ICourseRepository } from '@repositories/course/ICourseRepository';
+import { IUserCoursesRepository } from '@repositories/course/IUserCoursesRepository';
 
 export async function validateCourse(
   course_id: string,
-  coursesRepository: ICourseRepository,
+  coursesRepository: IUserCoursesRepository,
 ) {
   const existingCourse = await coursesRepository.findById(course_id);
 

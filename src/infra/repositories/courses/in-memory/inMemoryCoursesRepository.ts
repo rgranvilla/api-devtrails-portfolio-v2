@@ -1,13 +1,29 @@
-import { CourseMapper, ICourseProps } from '@mappers/course/courseMapper';
+import { CourseMapper, IUserCourseProps } from '@mappers/course/courseMapper';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
-import { ICourseRepository } from '../ICourseRepository';
+import { IUserCoursesRepository } from '../ICoursesRepository';
 
-export class InMemoryCourseRepository implements ICourseRepository {
-  public items: ICourseProps[] = [];
+export class InMemoryCoursesRepository implements IUserCoursesRepository {
+  public items: IUserCourseProps[] = [];
 
-  async findById(course_id: string): Promise<Course | null> {
+  async findByUserId(user_id: string): Promise<UserCourse[] | null> {
+    const existingCourses = await this.items.filter(
+      (item) => item.user_id === user_id,
+    );
+
+    if (!existingCourses) {
+      return null;
+    }
+
+    const courses = existingCourses.map((course) =>
+      CourseMapper.toDomain(course),
+    );
+
+    return courses;
+  }
+
+  async findById(course_id: string): Promise<UserCourse | null> {
     const existingCourse = this.items.find((item) => item.id === course_id);
 
     if (!existingCourse) {
@@ -17,7 +33,7 @@ export class InMemoryCourseRepository implements ICourseRepository {
     return CourseMapper.toDomain(existingCourse);
   }
 
-  async findByName(user_id: string, name: string): Promise<Course | null> {
+  async findByName(user_id: string, name: string): Promise<UserCourse | null> {
     const existingCourse = this.items.find(
       (item) => item.name === name && item.user_id === user_id,
     );
@@ -31,7 +47,7 @@ export class InMemoryCourseRepository implements ICourseRepository {
     return parsedCourse;
   }
 
-  listAll(): Promise<Course[] | null> {
+  listAll(): Promise<UserCourse[] | null> {
     throw new Error('Method not implemented.');
   }
   async delete(course_id: string): Promise<void> {
@@ -46,7 +62,7 @@ export class InMemoryCourseRepository implements ICourseRepository {
     this.items.splice(existingCourseIndex, 1);
   }
 
-  async save(course_id: string, data: Course): Promise<Course> {
+  async save(course_id: string, data: UserCourse): Promise<UserCourse> {
     const userCourseIndex = this.items.findIndex(
       (item) => item.id === course_id,
     );
@@ -59,7 +75,7 @@ export class InMemoryCourseRepository implements ICourseRepository {
 
     return CourseMapper.toDomain(this.items[userCourseIndex]);
   }
-  async create(course: Course): Promise<void> {
+  async create(course: UserCourse): Promise<void> {
     this.items.push(CourseMapper.toDatabase(course));
   }
 }

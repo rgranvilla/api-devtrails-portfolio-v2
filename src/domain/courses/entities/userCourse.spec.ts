@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { Course } from './course';
+import { UserCourse } from './userCourse';
 
 describe('User Entity', () => {
   it('should be able to create a new course', async () => {
@@ -23,7 +23,7 @@ describe('User Entity', () => {
       course_area,
       created_at,
       updated_at,
-    } = new Course({
+    } = new UserCourse({
       name: 'Javascript',
       date_start: new Date('June 1, 2022'),
       user_id: 'an user id',
@@ -50,7 +50,7 @@ describe('User Entity', () => {
   });
 
   it('should be able to set course values directly', async () => {
-    const course = new Course({
+    const course = new UserCourse({
       name: 'Javascript',
       description:
         '<h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="Javascript_0"></a>Javascript</h1>\n      <p class="has-line-data" data-line-start="2" data-line-end="3">In this JavaScript course, I learned a wide range of fundamental and advanced concepts for programming in this language. Some of the key topics that I covered in the course include:</p>\n      <ul>\n      <li class="has-line-data" data-line-start="4" data-line-end="6">\n      <p class="has-line-data" data-line-start="4" data-line-end="5">Variables and Data Types: I learned how to declare and utilize variables in JavaScript, as well as understand the different data types used in the language, such as strings, numbers, and booleans.</p>',

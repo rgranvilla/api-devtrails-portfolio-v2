@@ -5,24 +5,24 @@ import { createNewUserFactory } from '@factories/users/createNewUserFactory';
 
 import { IUpdateCourseDTO } from '@dtos/courses/IUpdateCourseDto';
 
-import { InMemoryCourseRepository } from '@repositories/course/in-memory/inMemoryCourseRepository';
+import { InMemoryCoursesRepository } from '@repositories/courses/in-memory/inMemoryCoursesRepository';
 import { InMemoryUsersRepository } from '@repositories/users/in-memory/inMemoryUsersRepository';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 import { User } from '@domain/users/entities/user';
 
 import { UpdateCourseUseCase } from './updateCourseUseCase';
 
 let usersRepository: InMemoryUsersRepository;
-let courseRepository: InMemoryCourseRepository;
+let courseRepository: InMemoryCoursesRepository;
 let sut: UpdateCourseUseCase;
 let user: User;
-let userCourse: Course;
+let userCourse: UserCourse;
 
 describe('Update Course Use Case', () => {
   beforeEach(async () => {
     usersRepository = new InMemoryUsersRepository();
-    courseRepository = new InMemoryCourseRepository();
+    courseRepository = new InMemoryCoursesRepository();
     sut = new UpdateCourseUseCase(courseRepository);
 
     user = await createNewUserFactory();

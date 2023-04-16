@@ -1,9 +1,9 @@
 import { DeleteCourseUseCase } from '@domain/courses/use-cases/delete-course/deleteCourseUseCase';
 
-import { PrismaCourseRepository } from '../prismaCoursesRepository';
+import { PrismaCoursesRepository } from '../prismaCoursesRepository';
 
 export function buildDeleteCourseUseCaseFactory() {
-  const courseRepository = new PrismaCourseRepository();
+  const courseRepository = new PrismaCoursesRepository();
   const deleteCourseUseCase = new DeleteCourseUseCase(courseRepository);
 
   return deleteCourseUseCase;

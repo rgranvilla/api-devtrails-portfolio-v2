@@ -2,9 +2,9 @@ import { validateCourse } from 'src/application/validators/courses/validateCours
 
 import { IUpdateCourseDTO } from '@dtos/courses/IUpdateCourseDto';
 
-import { ICourseRepository } from '@repositories/course/ICourseRepository';
+import { IUserCoursesRepository } from '@repositories/courses/ICoursesRepository';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
 interface IRequest {
   course_id: string;
@@ -12,11 +12,11 @@ interface IRequest {
 }
 
 interface IResponse {
-  course: Course;
+  course: UserCourse;
 }
 
 export class UpdateCourseUseCase {
-  constructor(private courseRepository: ICourseRepository) {}
+  constructor(private courseRepository: IUserCoursesRepository) {}
 
   async execute({ course_id, data }: IRequest): Promise<IResponse> {
     const existingCourse = await validateCourse(
@@ -24,7 +24,7 @@ export class UpdateCourseUseCase {
       this.courseRepository,
     );
 
-    const courseToUpdate = new Course(
+    const courseToUpdate = new UserCourse(
       {
         user_id: existingCourse.user_id,
         name: data.name ?? existingCourse.name,

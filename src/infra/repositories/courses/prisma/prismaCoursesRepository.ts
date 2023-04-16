@@ -2,12 +2,16 @@ import { prisma } from '@database/lib';
 
 import { CourseMapper } from '@mappers/course/courseMapper';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
-import { ICourseRepository } from '../ICourseRepository';
+import { IUserCoursesRepository } from '../ICoursesRepository';
 
-export class PrismaCourseRepository implements ICourseRepository {
-  async findById(course_id: string): Promise<Course | null> {
+export class PrismaCoursesRepository implements IUserCoursesRepository {
+  async findByUserId(user_id: string): Promise<UserCourse[] | null> {
+    throw new Error('Method not implemented.');
+  }
+
+  async findById(course_id: string): Promise<UserCourse | null> {
     const existingCourse = await prisma.course.findUnique({
       where: {
         id: course_id,
@@ -20,7 +24,7 @@ export class PrismaCourseRepository implements ICourseRepository {
 
     return CourseMapper.toDomain(existingCourse);
   }
-  async findByName(name: string, user_id: string): Promise<Course | null> {
+  async findByName(name: string, user_id: string): Promise<UserCourse | null> {
     const existingCourse = await prisma.course.findFirst({
       where: {
         name,
@@ -35,7 +39,7 @@ export class PrismaCourseRepository implements ICourseRepository {
     return CourseMapper.toDomain(existingCourse);
   }
 
-  async listAll(): Promise<Course[] | null> {
+  async listAll(): Promise<UserCourse[] | null> {
     throw new Error('Method not implemented.');
   }
 
@@ -43,7 +47,7 @@ export class PrismaCourseRepository implements ICourseRepository {
     await prisma.course.delete({ where: { id: course_id } });
   }
 
-  async save(course_id: string, data: Course): Promise<Course> {
+  async save(course_id: string, data: UserCourse): Promise<UserCourse> {
     const course = await prisma.course.update({
       where: { id: course_id },
       data: CourseMapper.toDatabase(data),
@@ -52,7 +56,7 @@ export class PrismaCourseRepository implements ICourseRepository {
     return CourseMapper.toDomain(course);
   }
 
-  async create(course: Course): Promise<void> {
+  async create(course: UserCourse): Promise<void> {
     await prisma.course.create({ data: CourseMapper.toDatabase(course) });
   }
 }

@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { throwError } from '@core/errors/throwError';
 
-import { buildDeleteCourseUseCaseFactory } from '@repositories/course/prisma/factory/buildDeleteCourseUseCaseFactory';
+import { buildDeleteCourseUseCaseFactory } from '@repositories/courses/prisma/factory/buildDeleteCourseUseCaseFactory';
 
 export async function deleteCourseController(
   request: FastifyRequest,
@@ -26,7 +26,6 @@ export async function deleteCourseController(
       .status(200)
       .send({ message: `Course with id ${course_id} was deleted.` });
   } catch (err) {
-    console.log(err);
     throwError(err, (status, message) => {
       return reply.status(status).send({ message });
     });

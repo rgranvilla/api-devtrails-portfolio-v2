@@ -2,9 +2,9 @@ import { FastifyInstance } from 'fastify';
 
 import { verifyJwt } from '@core/middlewares/verifyJWT';
 
-import { createCourseController } from '@controllers/course/create-course/createCourseController';
-import { deleteCourseController } from '@controllers/course/delete-course/deleteCourseController';
-import { updateCourseController } from '@controllers/course/update-course/updateCourseController';
+import { createCourseController } from '@controllers/courses/create-course/createCourseController';
+import { deleteCourseController } from '@controllers/courses/delete-course/deleteCourseController';
+import { updateCourseController } from '@controllers/courses/update-course/updateCourseController';
 
 export async function courseRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJwt);

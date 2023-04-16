@@ -2,16 +2,16 @@ import { beforeEach, describe, expect, it } from 'vitest';
 
 import { CourseAlreadyExistsError } from '@errors/courses/courseAlreadyExistsError';
 
-import { InMemoryCourseRepository } from '@repositories/course/in-memory/inMemoryCourseRepository';
+import { InMemoryCoursesRepository } from '@repositories/courses/in-memory/inMemoryCoursesRepository';
 
 import { CreateCourseUseCase } from './createCourseUseCase';
 
-let courseRepository: InMemoryCourseRepository;
+let courseRepository: InMemoryCoursesRepository;
 let sut: CreateCourseUseCase;
 
 describe('Create Course Use Case', () => {
   beforeEach(() => {
-    courseRepository = new InMemoryCourseRepository();
+    courseRepository = new InMemoryCoursesRepository();
     sut = new CreateCourseUseCase(courseRepository);
   });
 

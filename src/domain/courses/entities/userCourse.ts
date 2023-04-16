@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 
 import { Replace } from '@core/helpers/replace';
 
-interface ICourseProps {
+interface IUserCourseProps {
   user_id: string;
   name: string;
   description?: string | null;
@@ -22,13 +22,13 @@ interface ICourseProps {
   updated_at: Date;
 }
 
-export class Course {
+export class UserCourse {
   private _id: string;
-  private props: ICourseProps;
+  private props: IUserCourseProps;
 
   constructor(
     props: Replace<
-      ICourseProps,
+      IUserCourseProps,
       {
         certificate?: boolean;
         created_at?: Date;

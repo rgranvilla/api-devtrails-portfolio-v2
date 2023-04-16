@@ -1,9 +1,9 @@
 import { UpdateCourseUseCase } from '@domain/courses/use-cases/update-course/updateCourseUseCase';
 
-import { PrismaCourseRepository } from '../prismaCoursesRepository';
+import { PrismaCoursesRepository } from '../prismaCoursesRepository';
 
 export function buildUpdateCourseUseCaseFactory() {
-  const courseRepository = new PrismaCourseRepository();
+  const courseRepository = new PrismaCoursesRepository();
   const updateCourseUseCase = new UpdateCourseUseCase(courseRepository);
 
   return updateCourseUseCase;

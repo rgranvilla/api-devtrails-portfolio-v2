@@ -6,11 +6,11 @@ import { app } from '@app';
 import { createAndAuthenticateUser } from '@core/utils/tests/createAndAuthenticateUser';
 import { createUserCourse } from '@core/utils/tests/createUserCourse';
 
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
 describe('Delete User Skill (e2e)', () => {
   let userCourseData: {
-    course: Course;
+    course: UserCourse;
   };
 
   let userData: {

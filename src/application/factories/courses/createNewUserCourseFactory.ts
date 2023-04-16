@@ -1,6 +1,6 @@
-import { Course } from '@domain/courses/entities/course';
+import { UserCourse } from '@domain/courses/entities/userCourse';
 
-type Override = Partial<Course>;
+type Override = Partial<UserCourse>;
 
 interface IMakeNewUserCourseProps {
   course_id?: string;
@@ -13,7 +13,7 @@ export async function createNewUserCourseFactory({
   user_id,
   override,
 }: IMakeNewUserCourseProps) {
-  return new Course(
+  return new UserCourse(
     {
       user_id,
       name: 'course_name',
