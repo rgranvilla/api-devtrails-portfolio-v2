@@ -15,9 +15,9 @@ export async function createNewUserCourseFactory({
 }: IMakeNewUserCourseProps) {
   return new UserCourse(
     {
-      user_id,
-      name: 'course_name',
-      date_start: new Date(),
+      user_id: override?.user_id ?? user_id,
+      name: override?.name ?? 'course_name',
+      date_start: override?.date_start ?? new Date(),
     },
     course_id,
   );
