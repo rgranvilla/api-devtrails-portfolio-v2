@@ -4,14 +4,13 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { app } from '@app';
 
 import { createAndAuthenticateUser } from '@core/utils/tests/createAndAuthenticateUser';
-import { createUserSkill } from '@core/utils/tests/createUserSkill';
+import { createUserCourse } from '@core/utils/tests/createUserCourse';
 
-import { UserSkill } from '@domain/skills/entities/userSkill';
+import { Course } from '@domain/courses/entities/course';
 
 describe('Delete User Skill (e2e)', () => {
-  let userSkillData: {
-    userSkill: UserSkill;
-    userId: string;
+  let userCourseData: {
+    course: Course;
   };
 
   let userData: {
@@ -22,7 +21,7 @@ describe('Delete User Skill (e2e)', () => {
   beforeAll(async () => {
     await app.ready();
     userData = await createAndAuthenticateUser(app);
-    userSkillData = await createUserSkill(app, userData.id, userData.token);
+    userCourseData = await createUserCourse(app, userData.id, userData.token);
   });
 
   afterAll(async () => {
@@ -30,30 +29,28 @@ describe('Delete User Skill (e2e)', () => {
   });
 
   it('should be able to delete an user skill', async () => {
-    const { userSkill } = userSkillData;
+    const { course } = userCourseData;
 
     const result = await request(app.server)
-      .delete(`/${userData.id}/skills/${userSkill.id}/delete`)
+      .delete(`/${userData.id}/courses/${course.id}/delete`)
       .set('Authorization', `Bearer ${userData.token}`)
       .send();
 
     expect(result.status).toBe(200);
-    expect(result.body.message).toBe(
-      `User Skill with id ${userSkill.id} was deleted.`,
-    );
   });
 
   it('should throw error if user skill id doesnt exists', async () => {
-    const { userId } = userSkillData;
-    const wrongUserSkillId = '123e4567-e89b-12d3-a456-426614174000';
+    const { id } = userData;
+    const wrongCourseId = '123e4567-e89b-12d3-a456-426614174000';
+
     const result = await request(app.server)
-      .delete(`/${userId}/skills/${wrongUserSkillId}/delete`)
+      .delete(`/${id}/courses/${wrongCourseId}/delete`)
       .set('Authorization', `Bearer ${userData.token}`)
       .send();
+
     const { message } = result.body;
-    expect(result.status).toBe(404);
-    expect(message).toBe(
-      `The user skill with id ${wrongUserSkillId} not found.`,
-    );
+
+    expect(result.status).toBe(409);
+    expect(message).toBe(`Resource not found.`);
   });
 });

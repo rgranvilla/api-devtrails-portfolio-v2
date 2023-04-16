@@ -39,8 +39,8 @@ export class PrismaCourseRepository implements ICourseRepository {
     throw new Error('Method not implemented.');
   }
 
-  async delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(course_id: string): Promise<void> {
+    await prisma.course.delete({ where: { id: course_id } });
   }
 
   async save(course_id: string, data: Course): Promise<Course> {
