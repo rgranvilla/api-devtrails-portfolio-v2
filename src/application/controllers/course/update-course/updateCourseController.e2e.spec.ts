@@ -42,8 +42,6 @@ describe('Update Course (e2e)', () => {
       .set('Authorization', `Bearer ${userData.token}`)
       .send({ ...dataToUpdate });
 
-    console.log(result.body, result.status);
-
     expect(result.status).toBe(201);
     expect(result.body.name).toBe('Typescript');
     expect(result.body.description).toBe('Typescript course...');

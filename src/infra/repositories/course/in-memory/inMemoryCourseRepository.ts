@@ -34,8 +34,16 @@ export class InMemoryCourseRepository implements ICourseRepository {
   listAll(): Promise<Course[] | null> {
     throw new Error('Method not implemented.');
   }
-  delete(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async delete(course_id: string): Promise<void> {
+    const existingCourseIndex = await this.items.findIndex(
+      (item) => item.id === course_id,
+    );
+
+    if (existingCourseIndex === -1) {
+      return;
+    }
+
+    this.items.splice(existingCourseIndex, 1);
   }
 
   async save(course_id: string, data: Course): Promise<Course> {
