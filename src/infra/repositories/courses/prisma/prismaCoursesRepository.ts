@@ -8,7 +8,21 @@ import { IUserCoursesRepository } from '../ICoursesRepository';
 
 export class PrismaCoursesRepository implements IUserCoursesRepository {
   async findByUserId(user_id: string): Promise<UserCourse[] | null> {
-    throw new Error('Method not implemented.');
+    const existingCourses = await prisma.course.findMany({
+      where: {
+        user_id,
+      },
+    });
+
+    if (!existingCourses) {
+      return null;
+    }
+
+    const courses = existingCourses.map((course) =>
+      CourseMapper.toDomain(course),
+    );
+
+    return courses;
   }
 
   async findById(course_id: string): Promise<UserCourse | null> {
