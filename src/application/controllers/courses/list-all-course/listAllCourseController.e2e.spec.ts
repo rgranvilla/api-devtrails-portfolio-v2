@@ -50,15 +50,4 @@ describe('Get All User Courses (e2e)', () => {
     expect(secondRequest.body[0].name).toBe('NodeJs');
     expect(secondRequest.body[1].name).toBe('HTML 5');
   });
-
-  // it('should throw error if user id doesnt exists', async () => {
-  //   const wrongUserId = '123e4567-e89b-12d3-a456-426614174000';
-  //   const result = await request(app.server)
-  //     .get(`/${wrongUserId}/skills`)
-  //     .set('Authorization', `Bearer ${userData.token}`)
-  //     .send();
-  //   const { message } = result.body;
-  //   expect(result.status).toBe(404);
-  //   expect(message).toBe(`The user with id ${wrongUserId} not found.`);
-  // });
 });
